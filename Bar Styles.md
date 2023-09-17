@@ -1,9 +1,9 @@
-![SOLID](https://ibb.co/rxjfVJr)
+![](Bar Styles\SOLID.png)
 
-![SEGMENTED_6](https://ibb.co/RC3VNp2)
+![](Bar Styles\SEGMENTED_6.png)
 
-![SEGMENTED_10](https://ibb.co/VBZYyY2)
+![](Bar Styles\SEGMENTED_10.png)
 
-![SEGMENTED_12](https://ibb.co/YL8KQ6S)
+![](Bar Styles\SEGMENTED_12.png)
 
-![SEGMENTED_20](https://ibb.co/zNwcwNY)
+![](Bar Styles\SEGMENTED_20.png)
