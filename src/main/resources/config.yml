@@ -13,7 +13,7 @@ checkUpdates: true
 messagesPrefix: '&7(&e&lUCC&7) '
 
 CheatCheck:
-  # Эффекты, накладываемые на игрока во время начала проверки. Список доступных эффектов можно найти здесь: todo
+  # Эффекты, накладываемые на игрока во время начала проверки.
   EffectsToSuspect:
     - BLINDNESS
   # Время, которое даётся игроку на предоставление своих контактов модератору для связи. Значение указывается в секундах.
@@ -24,7 +24,8 @@ Titles:
   StartCheckSuspectSubTitle: "&fСледуйте инструкциям в чате"
 
 BossBars:
-  # Доступные значения 'Color' и 'Style' можно найти здесь: todo
+  # Bar Color: PINK, BLUE, RED, GREEN, YELLOW, WHITE, PURPLE
+  # Bar Style: SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
   SuspectBossBar:
     Text: "Проверка на читы | У вас осталось &c%timeLeft%&r сек."
     PausedText: "Проверка на читы | Пауза"
@@ -82,5 +83,5 @@ PlayerLocks:
   TakeDamage:
     # Запретить получать урон от других энтити(Игроки, Мобы и так далее) по подозреваемому?
     Disabled: true
-    # Воспроизводимый звук игроку при попытке нанести урон подозреваемому. Список доступных звуков можно найти здесь: todo
+    # Воспроизводимый звук игроку при попытке нанести урон подозреваемому.
     Sound: ENTITY_ILLUSIONER_PREPARE_MIRROR
