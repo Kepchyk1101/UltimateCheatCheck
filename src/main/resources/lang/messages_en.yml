@@ -1,0 +1,77 @@
+# PlaceholderAPI will not work on the 'system' category! (for all others - it will be. If it exists, of course)
+system:
+  unknownSound: "Unknown sound. (PlayerLocks.TakeDamage.Sound) The plugin is not broken."
+  pluginEnabled: "Plugin launched successfully!"
+  enabledPlaceholderAPI: "PlaceholderAPI detected, placeholder support enabled!"
+  languageFileNotFound: "The localization file specified in the config was not found! The standard localization file will be used..."
+  pluginRecovery: "Restoring a plugin after an emergency termination of the process..."
+  completionAllChecks: "Completing all active checks..."
+  checkUpdateFailed: "Failed to check for a new version of the plugin!"
+  availableNewPluginVersion: "A new version of the plugin is available. You can download it here: todo"
+
+misc:
+  configsSuccessfullyReloaded: "&aConfigs have been successfully reloaded!"
+  availableNewPluginVersion: "&aA new version of the plugin is available: &e%latestVersion%&a. You can download it here: &6todo"
+  helpCommandMessage:
+    - "&6======== &eHelp &9/ucc &6========"
+    - "&e/ucc reload - &bReload plugin configuration files"
+    - "&e/ucc start <player> - &aStart checking"
+    - "&e/ucc acquit <player> - &aFinish the check (Found not guilty)"
+    - "&e/ucc condemn <player> - &aОFinish check (Found guilty)"
+    - "&e/ucc pause <player> - &aPause the cheat check timer"
+    - "&e/ucc contact <contacts> - &9Provide contact information to the moderator (Player)"
+    - "&e/ucc confess - &9Admit cheating and finish the check early (Player)"
+    - "&6====== &eUltimateCheatCheck &6======"
+
+cheatCheck:
+  messagesToModer:
+    youStartedChecking: "&aYou have called suspect &6%suspect%&a for cheat check!"
+    youAcquittedSuspect: "&aThe check is completed. You found the suspect &6%suspect%&a innocent!"
+    youCondemnedSuspect: "&cThe check is completed. You found the suspect &6%suspect%&c guilty!"
+    youPausedChecking: "&aYou have paused the cheat check timer for &6%suspect%&a!"
+    suspectConfessed: "&cThe check is completed. The suspect admitted to using third-party software!"
+    suspectQuit: "&cThe check is completed. Suspect &6%suspect%&c &cleft the game!"
+    suspectsTimerExpired: "&cThe check is completed. The suspect's timer has expired."
+    youReceivedContacts: "&Suspect &6%suspect% &asent you a message: \"&6%contacts%&a\""
+  messagesToSuspect:
+    youCalledForCheck:
+      - "&a╔             &4&lCHECKING FOR CHEATS"
+      - "&a║ &cYou are suspected of using third-party software"
+      - "&a║"
+      - "&a║ &cYou have &6%time%&c sec., to provide your contact"
+      - "&a║ &cinfo for communication. &7(&e/ucc contact <contacts>&7)"
+      - "&a║ &cWhen the timer expires, you will be punished!"
+      - "&a║ &cLeaving the server is also punishable!"
+      - "&a║"
+      - "&a║ &aYour moderator: &6%moder%"
+      - "&a║ &aThe moderator may pause your timer."
+      - "&a║ &aYou can admit to using third party software."
+      - "&a╚ &7(&e/ucc confess&7)&c."
+    youAcquitted: "&The check is completed successfully by moderator &6%moder%&a. You can be free!"
+    yourCheckPaused: "&aModerator &6%moder%&a has paused your cheat check timer!"
+    youSentContacts: "&aYou have successfully sent a message to moderator &6%moder%&a. Message: \"&6%contacts%&a\""
+    moderQuit: "&cThe check is completed. Your moderator &6%moder%&c has left the game!"
+
+errors:
+  noPermission: "&cYou do not have permissions to use this command!"
+  playerNotFound: "&cThe player is offline or not found!"
+  commandCanUsedOnlyByPlayer: "&cThis command can only be used by a player on the server!"
+  cheatCheckAlreadyPaused: "&cYou cannot pause an already paused cheat check!"
+  suspectAlreadyOnCheatCheck: "&cYou cannot call this player for cheat check because he has already been called by another moderator!"
+  suspectHasImmunity: "&cYou cannot call this player to a check because he is immune to checks!"
+  cannotSummonYourself: "&cYou cannot call yourself to cheat check!"
+  cannotStopNotStartedCheatCheck: "&cYou cannot stop a cheat check that has not started!"
+  cannotPauseNotStartedCheatCheck: "&cYou cannot pause a cheat check that has not started!"
+  cannotCancelNotStartedCheatCheck: "&cYou cannot finish a cheat check that has not started!"
+  cannotSendMessageToModer: "&cYou cannot send contact information to the moderator, since you are not on cheat check!"
+  youCannotUseChat: "&cYou cannot use the chat because you are being checked for cheats!"
+  youCannotUseCommands: "&cYou cannot use commands because you are being checked for cheats!"
+  youCannotInteractWithSuspect: "&cYou cannot interact with this player because he has been summoned for a cheat check!"
+  youCannotConfess: "&cYou cannot admit to using third party software because you are not under verification!"
+
+wrongCommandUsages:
+  start: "&cIncorrect use of command! &aUse: /ucc start <player>"
+  acquit: "&cIncorrect use of command! &aUse: /ucc acquit <player>"
+  condemn: "&cIncorrect use of command! &aUse: /ucc condemn <player>"
+  pause: "&cIncorrect use of command! &aUse: /ucc pause <player>"
+  contact: "&cIncorrect use of command! &aUse: /ucc contact <contacts>"

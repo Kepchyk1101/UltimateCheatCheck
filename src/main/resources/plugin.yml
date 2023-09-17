@@ -1,0 +1,48 @@
+name: UltimateCheatCheck
+version: '${project.version}'
+main: com.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck
+api-version: '1.16'
+author: Kepchyk1101
+website: https://github.com/Kepchyk1101/UltimateCheatCheck
+softdepend: [PlaceholderAPI]
+commands:
+  ultimateCheatCheck:
+    description: Главная команда для всего плагина
+    aliases: ucc
+permissions:
+  ucc.*:
+    description: Позволяет использовать любые команды
+    children:
+      - ucc.reload
+      - ucc.moder
+  ucc.moder:
+    description: Позволяет использовать команды /ucc start, /ucc acquit, /ucc condemn, /ucc pause
+    children:
+      - ucc.start
+      - ucc.acquit
+      - ucc.condemn
+      - ucc.pause
+  ucc.player:
+    description: Позволяет использовать команды /ucc contact, /ucc confess
+    default: true
+    children:
+      - ucc.contact
+      - ucc.confess
+  ucc.reload:
+    description: Позволяет использовать команду /ucc reload
+  ucc.start:
+    description: Позволяет использовать команду /ucc start
+  ucc.acquit:
+    description: Позволяет использовать команду /ucc acquit
+  ucc.condemn:
+    description: Позволяет использовать команду /ucc condemn
+  ucc.pause:
+    description: Позволяет использовать команду /ucc pause
+  ucc.contact:
+    default: true
+    description: Позволяет использовать команду /ucc contact
+  ucc.confess:
+    default: true
+    description: Позволяет использовать команду /ucc confess
+  ucc.immunity:
+    description: Иммунитет к проверкам на читы
