@@ -17,22 +17,20 @@ public class AllListeners implements Listener {
     @EventHandler
     private void onSuspectQuit(org.bukkit.event.player.PlayerQuitEvent event) {
 
-        Player player = event.getPlayer();
-        if (event.getReason() == org.bukkit.event.player.PlayerQuitEvent.QuitReason.DISCONNECTED &&
-                CheatCheckManager.isChecking(player))
-
+        final Player player = event.getPlayer();
+        if (CheatCheckManager.isChecking(player)) {
             CheatCheckManager.suspectQuit(player);
+        }
 
     }
 
     @EventHandler
     private void onModerQuit(org.bukkit.event.player.PlayerQuitEvent event) {
 
-        Player player = event.getPlayer();
-        if (event.getReason() == org.bukkit.event.player.PlayerQuitEvent.QuitReason.DISCONNECTED &&
-                CheatCheckManager.isModer(player))
-
+        final Player player = event.getPlayer();
+        if (CheatCheckManager.isModer(player)) {
             CheatCheckManager.moderQuit(player);
+        }
 
     }
 

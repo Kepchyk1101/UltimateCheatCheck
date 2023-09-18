@@ -108,11 +108,15 @@ public class CheatCheck {
                 0, 300 * 20,0);
 
         blockUnderSuspect.setType(Material.BEDROCK);
-        suspect.teleport(new Location(
-                blockUnderSuspect.getWorld(),
-                blockUnderSuspect.getBoundingBox().getCenterX(),
-                blockUnderSuspect.getY() + 1,
-                blockUnderSuspect.getBoundingBox().getCenterZ()));
+
+        // getBoundingBox() нету на 1.12.2 :( плакали мои центральные координаты
+//        suspect.teleport(new Location(
+//                blockUnderSuspect.getWorld(),
+//                blockUnderSuspect.getBoundingBox().getCenterX(),
+//                blockUnderSuspect.getY() + 1,
+//                blockUnderSuspect.getBoundingBox().getCenterZ()));
+
+        suspect.teleport(blockUnderSuspect.getLocation().add(0, 1, 0));
 
         suspectBossBar.addPlayer(suspect);
         moderBossBar.addPlayer(moderator);
@@ -171,6 +175,7 @@ public class CheatCheck {
         stop();
 
     }
+
 
     public Player getSuspect() {
         return suspect;

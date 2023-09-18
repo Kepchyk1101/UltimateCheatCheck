@@ -31,7 +31,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
     private FileConfiguration messages;
     private FileConfiguration config;
-    private final double availableConfigVersion = 1.0;
 
     // Необходимое для восстановления, в случае экстренного выключения сервера
     private static Checks checks;
@@ -46,7 +45,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         saveDefaultConfig();
         config = getConfig();
-        updateConfig();
         loadConfigs();
 
         loadChecksFile();
@@ -84,17 +82,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         loadLanguageConfig();
         ConfigUtils.setConfigs(config, messages);
-
-    }
-
-    private void updateConfig() {
-
-        double currentConfigVersion = config.getDouble("configVersion");
-        if (availableConfigVersion != currentConfigVersion) {
-            config.options().copyDefaults(true);
-            config.set("configVersion", availableConfigVersion);
-            saveConfig();
-        }
 
     }
 

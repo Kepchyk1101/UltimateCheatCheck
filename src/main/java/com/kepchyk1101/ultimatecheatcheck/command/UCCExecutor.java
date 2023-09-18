@@ -3,7 +3,7 @@ package com.kepchyk1101.ultimatecheatcheck.command;
 import com.kepchyk1101.ultimatecheatcheck.command.subcommands.*;
 import com.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
 import com.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import com.kepchyk1101.ultimatecheatcheck.utils.PermissionUtils;
+import com.kepchyk1101.ultimatecheatcheck.utils.PlayerUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -56,7 +56,7 @@ public class UCCExecutor implements CommandExecutor {
 
         }
 
-        if (PermissionUtils.hasPermission(commandSender, "ucc.help", "ucc.moder", "ucc.*"))
+        if (PlayerUtils.hasPermission(commandSender, "ucc.help", "ucc.moder", "ucc.*"))
             for (String message : ConfigUtils.getMessages("misc.helpCommandMessage"))
                 ChatUtils.sendMessage(commandSender, message);
 
