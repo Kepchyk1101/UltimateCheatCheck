@@ -33,7 +33,7 @@ BossBars:
     Style: SOLID
   ModerBossBar:
     Text: "Проверка для игрока &6%suspect%&r | Осталось &c%timeLeft%&r сек."
-    PausedText: "Проверка для &6%suspect%&r | Пауза"
+    PausedText: "Проверка для игрока &6%suspect%&r | Пауза"
     Color: GREEN
     Style: SOLID
 
