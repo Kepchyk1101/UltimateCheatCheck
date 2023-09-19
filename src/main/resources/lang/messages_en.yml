@@ -7,11 +7,11 @@ system:
   pluginRecovery: "Restoring a plugin after an emergency termination of the process..."
   completionAllChecks: "Completing all active checks..."
   checkUpdateFailed: "Failed to check for a new version of the plugin!"
-  availableNewPluginVersion: "A new version of the plugin is available. You can download it here: todo"
+  availableNewPluginVersion: "A new version of the plugin is available: %latestVersion% . You can download it here: https://www.spigotmc.org/resources/ultimatecheatcheck-1-12-2-1-20-1.112711/"
 
 misc:
   configsSuccessfullyReloaded: "&aConfigs have been successfully reloaded!"
-  availableNewPluginVersion: "&aA new version of the plugin is available: &e%latestVersion%&a. You can download it here: &6todo"
+  availableNewPluginVersion: "&aA new version of the plugin is available: &e%latestVersion%&a. You can download it here: &6https://www.spigotmc.org/resources/ultimatecheatcheck-1-12-2-1-20-1.112711/"
   helpCommandMessage:
     - "&6======== &eHelp &9/ucc &6========"
     - "&e/ucc reload - &bReload plugin configuration files"

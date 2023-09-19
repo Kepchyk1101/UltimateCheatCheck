@@ -51,7 +51,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
         loadIntegrations();
         loadCommand();
 
-        //checkUpdates();
+        checkUpdates();
 
         new Metrics(this, 19805);
 
@@ -105,10 +105,12 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
     private void checkUpdates() {
 
-        new UpdateChecker(this, 1337).getLatestVersion(version -> {
-            log.warning(ConfigUtils.getMessage("system.availableNewPluginVersion")
-                    .replace("%latestVersion%", version));
-            getServer().getPluginManager().registerEvents(new UpdateCheckerListeners(version), instance);
+        new UpdateChecker(this, 112711).getLatestVersion(version -> {
+            if (!getDescription().getVersion().equalsIgnoreCase(version)) {
+                log.warning(ConfigUtils.getMessage("system.availableNewPluginVersion")
+                        .replace("%latestVersion%", version));
+                getServer().getPluginManager().registerEvents(new UpdateCheckerListeners(version), instance);
+            }
         });
 
     }

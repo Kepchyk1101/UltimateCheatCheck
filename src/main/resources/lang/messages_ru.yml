@@ -7,11 +7,11 @@ system:
   pluginRecovery: "Восстановление плагина после экстренного завершения процесса ..."
   completionAllChecks: "Завершение всех активных проверок ..."
   checkUpdateFailed: "Не удалось проверить наличие новой версии плагина!"
-  availableNewPluginVersion: "Доступна новая версия плагина: %latestVersion%. Скачать можно здесь: todo"
+  availableNewPluginVersion: "Доступна новая версия плагина: %latestVersion% . Скачать можно здесь: https://www.spigotmc.org/resources/ultimatecheatcheck-1-12-2-1-20-1.112711/"
 
 misc:
   configsSuccessfullyReloaded: "&aКонфиги успешно перезагружены!"
-  availableNewPluginVersion: "&aДоступна новая версия плагина: &e%latestVersion%&a. Скачать можно здесь: &6todo"
+  availableNewPluginVersion: "&aДоступна новая версия плагина: &e%latestVersion%&a. Скачать можно здесь: &6https://www.spigotmc.org/resources/ultimatecheatcheck-1-12-2-1-20-1.112711/"
   helpCommandMessage:
     - "&6====== &eПомощь по команде &9/ucc &6======"
     - "&e/ucc reload - &bПерезагрузить конфигурационные файлы плагина"
