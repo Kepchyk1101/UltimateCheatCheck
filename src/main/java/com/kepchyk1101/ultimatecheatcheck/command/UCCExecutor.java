@@ -19,13 +19,13 @@ public class UCCExecutor implements CommandExecutor {
     public UCCExecutor() {
         subCommands = new ArrayList<>();
         subCommands.addAll(Arrays.asList(
-                new ReloadSubCommand(), //todo
+                new ReloadSubCommand(),
                 new StartSubCommand(),
-                new AcquitSubCommand(), //todo
-                new CondemnSubCommand(), //todo
-                new PauseSubCommand(), //todo
-                new ContactSubCommand(), //todo
-                new ConfessSubCommand())); //todo
+                new AcquitSubCommand(),
+                new CondemnSubCommand(),
+                new PauseSubCommand(),
+                new ContactSubCommand(),
+                new ConfessSubCommand()));
     }
 
     @Override

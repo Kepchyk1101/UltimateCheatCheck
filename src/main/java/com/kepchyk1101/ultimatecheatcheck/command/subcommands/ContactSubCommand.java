@@ -24,7 +24,8 @@ public class ContactSubCommand implements SubCommand {
 
             }
 
-        }
+        } else
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
 
         return true;
 

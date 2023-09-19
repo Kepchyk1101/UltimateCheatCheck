@@ -17,7 +17,7 @@ misc:
     - "&e/ucc reload - &bReload plugin configuration files"
     - "&e/ucc start <player> - &aStart checking"
     - "&e/ucc acquit <player> - &aFinish the check (Found not guilty)"
-    - "&e/ucc condemn <player> - &aОFinish check (Found guilty)"
+    - "&e/ucc condemn <player> - &aОFinish the check (Found guilty)"
     - "&e/ucc pause <player> - &aPause the cheat check timer"
     - "&e/ucc contact <contacts> - &9Provide contact information to the moderator (Player)"
     - "&e/ucc confess - &9Admit cheating and finish the check early (Player)"

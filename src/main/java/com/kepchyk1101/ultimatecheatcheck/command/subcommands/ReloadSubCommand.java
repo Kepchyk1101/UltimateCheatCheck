@@ -16,7 +16,8 @@ public class ReloadSubCommand implements SubCommand{
             UltimateCheatCheck.getInstance().reloadConfigs();
             ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("misc.configsSuccessfullyReloaded"));
 
-        }
+        } else
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
 
         return true;
 

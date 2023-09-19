@@ -13,25 +13,31 @@ public class CondemnSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (commandSender instanceof Player && commandSender.hasPermission("ucc.condemn")) {
+        if (commandSender instanceof Player) {
 
-            if (args.length == 0) {
+            if (commandSender.hasPermission("ucc.condemn")) {
 
-                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.condemn"));
+                if (args.length == 0) {
 
-            } else {
+                    ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.condemn"));
 
-                Player suspect = Bukkit.getPlayer(args[0]);
-                if (suspect != null)
+                } else {
 
-                    CheatCheckManager.condemnPlayer(suspect, (Player) commandSender);
+                    Player suspect = Bukkit.getPlayer(args[0]);
+                    if (suspect != null)
 
-                else
-                    ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
+                        CheatCheckManager.condemnPlayer(suspect, (Player) commandSender);
 
-            }
+                    else
+                        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
 
-        }
+                }
+
+            } else
+                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
+
+        } else
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
 
         return true;
 

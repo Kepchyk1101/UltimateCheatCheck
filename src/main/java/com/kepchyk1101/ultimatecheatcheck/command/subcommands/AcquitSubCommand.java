@@ -13,26 +13,32 @@ public class AcquitSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (commandSender instanceof Player && commandSender.hasPermission("ucc.acquit")) {
+        if (commandSender instanceof Player) {
 
-            if (args.length == 0) {
+            if (commandSender.hasPermission("ucc.acquit")) {
 
-                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.acquit"));
+                if (args.length == 0) {
 
-            } else {
+                    ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.acquit"));
 
-                Player suspect = Bukkit.getPlayer(args[0]);
+                } else {
 
-                if (suspect != null)
+                    Player suspect = Bukkit.getPlayer(args[0]);
 
-                    CheatCheckManager.acquitPlayer(suspect, (Player) commandSender);
+                    if (suspect != null)
 
-                else
-                    ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
+                        CheatCheckManager.acquitPlayer(suspect, (Player) commandSender);
 
-            }
+                    else
+                        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
 
-        }
+                }
+
+            } else
+                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
+
+        } else
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
 
         return true;
 
