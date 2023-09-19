@@ -1,7 +1,6 @@
 package com.kepchyk1101.ultimatecheatcheck.command;
 
 import com.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
-import com.kepchyk1101.ultimatecheatcheck.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -53,18 +52,18 @@ public class UCCTab implements TabCompleter {
 
             case 2:
 
-                if (args[0].equals("start") && PlayerUtils.hasPermission(commandSender, "ucc.start", "ucc.moder", "ucc.*")) {
+                if (args[0].equals("start") && commandSender.hasPermission("ucc.start")) {
                     List<String> players = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers())
                         if (!player.hasPermission("ucc.immunity") && !CheatCheckManager.isChecking(player))
                             players.add(player.getName());
                     players.remove(commandSender.getName());
                     return players;
-                } else if (args[0].equals("acquit") && PlayerUtils.hasPermission(commandSender, "ucc.acquit", "ucc.moder", "ucc.*")) {
+                } else if (args[0].equals("acquit") && commandSender.hasPermission("ucc.acquit")) {
                     return getCheckingPlayers((Player) commandSender);
-                } else if (args[0].equals("condemn") && PlayerUtils.hasPermission(commandSender, "ucc.condemn", "ucc.moder", "ucc.*")) {
+                } else if (args[0].equals("condemn") && commandSender.hasPermission("ucc.condemn")) {
                     return getCheckingPlayers((Player) commandSender);
-                } else if (args[0].equals("pause") && PlayerUtils.hasPermission(commandSender, "ucc.pause", "ucc.moder", "ucc.*")) {
+                } else if (args[0].equals("pause") && commandSender.hasPermission("ucc.pause")) {
                     List<String> players = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers())
                         if (CheatCheckManager.isChecking(player) &&

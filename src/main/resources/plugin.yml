@@ -22,12 +22,17 @@ permissions:
       - ucc.acquit
       - ucc.condemn
       - ucc.pause
+      - ucc.help
   ucc.player:
     description: Позволяет использовать команды /ucc contact, /ucc confess
     default: true
     children:
       - ucc.contact
       - ucc.confess
+  ucc.help:
+    description: Позволяет видеть окно помощи при неправильном использовании команды
+  ucc.immunity:
+    description: Иммунитет к проверкам на читы
   ucc.reload:
     description: Позволяет использовать команду /ucc reload
   ucc.start:
@@ -44,5 +49,3 @@ permissions:
   ucc.confess:
     default: true
     description: Позволяет использовать команду /ucc confess
-  ucc.immunity:
-    description: Иммунитет к проверкам на читы

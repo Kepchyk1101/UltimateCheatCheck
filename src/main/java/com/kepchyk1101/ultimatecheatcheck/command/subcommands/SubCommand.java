@@ -7,4 +7,10 @@ public interface SubCommand {
 
     boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args);
 
+    String getName();
+
+    //String getUsage();
+
+    //String getPermission();
+
 }

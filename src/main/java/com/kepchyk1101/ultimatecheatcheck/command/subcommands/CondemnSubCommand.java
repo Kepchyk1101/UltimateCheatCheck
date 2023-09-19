@@ -3,7 +3,6 @@ package com.kepchyk1101.ultimatecheatcheck.command.subcommands;
 import com.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
 import com.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
 import com.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import com.kepchyk1101.ultimatecheatcheck.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,8 +13,7 @@ public class CondemnSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (PlayerUtils.isPlayer(commandSender) &&
-                PlayerUtils.hasPermission(commandSender, "ucc.condemn", "ucc.moder", "ucc.*")) {
+        if (commandSender instanceof Player && commandSender.hasPermission("ucc.condemn")) {
 
             if (args.length == 0) {
 
@@ -37,6 +35,11 @@ public class CondemnSubCommand implements SubCommand {
 
         return true;
 
+    }
+
+    @Override
+    public String getName() {
+        return "condemn";
     }
 
 }

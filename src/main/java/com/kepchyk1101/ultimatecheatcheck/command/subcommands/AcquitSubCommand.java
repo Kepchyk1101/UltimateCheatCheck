@@ -3,7 +3,6 @@ package com.kepchyk1101.ultimatecheatcheck.command.subcommands;
 import com.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
 import com.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
 import com.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import com.kepchyk1101.ultimatecheatcheck.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,14 +13,13 @@ public class AcquitSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (PlayerUtils.isPlayer(commandSender) &&
-                PlayerUtils.hasPermission(commandSender, "ucc.acquit", "ucc.moder", "ucc.*")) {
+        if (commandSender instanceof Player && commandSender.hasPermission("ucc.acquit")) {
 
             if (args.length == 0) {
 
                 ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.acquit"));
 
-            } else{
+            } else {
 
                 Player suspect = Bukkit.getPlayer(args[0]);
 
@@ -38,6 +36,11 @@ public class AcquitSubCommand implements SubCommand {
 
         return true;
 
+    }
+
+    @Override
+    public String getName() {
+        return "acquit";
     }
 
 }
