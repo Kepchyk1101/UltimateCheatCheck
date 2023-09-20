@@ -1,6 +1,6 @@
 name: UltimateCheatCheck
 version: '${project.version}'
-main: com.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck
+main: me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck
 api-version: '1.15'
 author: Kepchyk1101
 website: https://github.com/Kepchyk1101/UltimateCheatCheck
