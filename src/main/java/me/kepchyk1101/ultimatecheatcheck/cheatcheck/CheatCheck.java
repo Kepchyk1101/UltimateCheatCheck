@@ -1,10 +1,7 @@
 package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
-import me.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.Checks;
-import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.ServerVersion;
+import me.kepchyk1101.ultimatecheatcheck.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,6 +21,9 @@ import java.util.UUID;
 
 public class CheatCheck {
 
+    private final UltimateCheatCheck plugin;
+    private final RecoveryController recoveryController;
+
     private final Player suspect, moderator;
     private final UUID uuid;
     private final Location suspectLocation;
@@ -37,6 +37,8 @@ public class CheatCheck {
     private boolean isPaused;
 
     public CheatCheck(Player suspect, Player moderator) {
+        this.plugin = UltimateCheatCheck.getInstance();
+        this.recoveryController = plugin.getRecoveryController();
         this.suspect = suspect;
         this.moderator = moderator;
         this.uuid = UUID.randomUUID();
@@ -50,25 +52,28 @@ public class CheatCheck {
 
     public void start() {
 
-        this.suspectBossBar = Bukkit.createBossBar(
+        suspectBossBar = Bukkit.createBossBar(
                 ChatUtils.format(ConfigUtils.getString("BossBars.SuspectBossBar.Text"), suspect),
                 BarColor.valueOf(ConfigUtils.getString("BossBars.SuspectBossBar.Color")),
                 BarStyle.valueOf(ConfigUtils.getString("BossBars.SuspectBossBar.Style"))
         );
 
-        this.moderBossBar = Bukkit.createBossBar(
+        moderBossBar = Bukkit.createBossBar(
                 ChatUtils.format(ConfigUtils.getString("BossBars.ModerBossBar.Text"), moderator),
                 BarColor.valueOf(ConfigUtils.getString("BossBars.ModerBossBar.Color")),
                 BarStyle.valueOf(ConfigUtils.getString("BossBars.ModerBossBar.Style"))
         );
 
-        this.bossBarsController = new BukkitRunnable() {
+        bossBarsController = new BukkitRunnable() {
 
             int counter = timer;
             final double secondProgress = 1.0 / timer;
 
             @Override
             public void run() {
+
+                // Bossbar timers
+
                 suspectBossBar.setTitle(ChatUtils.format(
                         ConfigUtils.getString("BossBars.SuspectBossBar.Text")
                                 .replace("%timeLeft%", String.valueOf(counter)),
@@ -107,9 +112,14 @@ public class CheatCheck {
                 ConfigUtils.getString("Titles.StartCheckSuspectSubTitle"),
                 0, 300 * 20,0);
 
-        this.blockUnderSuspect.setType(Material.BEDROCK);
+        blockUnderSuspect.setType(Material.BEDROCK);
 
-        if (UltimateCheatCheck.getInstance().getServerVersion() == ServerVersion.V1_13_2_orHigher) {
+        /*
+         * If the server version is 1.13.2 and higher, the player will be teleported to the center of the block.
+         * If it is 1.13.1 and below, it will be teleported to the edge.
+         * BoundingBox appeared only in 1.13.2
+         */
+        if (plugin.getServerVersion() == ServerVersion.V1_13_2_orHigher) {
             BoundingBox boundingBox = blockUnderSuspect.getBoundingBox();
             suspect.teleport(new Location(
                     blockUnderSuspect.getWorld(),
@@ -122,19 +132,23 @@ public class CheatCheck {
         suspectBossBar.addPlayer(suspect);
         moderBossBar.addPlayer(moderator);
 
-        bossBarsController.runTaskTimer(UltimateCheatCheck.getInstance(), 0L, 20L);
+        bossBarsController.runTaskTimer(plugin, 0L, 20L);
 
+        /*
+         * The check is recorded in the recovery file so that in the event of
+         * an emergency shutdown of the server, everything can be restored
+         */
         String uuidString = uuid.toString();
         Location blockLocation = blockUnderSuspect.getLocation();
-        Checks checks = UltimateCheatCheck.getChecks();
-        FileConfiguration checksConfig = checks.getConfig();
-        checksConfig.set("checks." + uuidString + ".suspect", suspect.getName());
-        checksConfig.set("checks." + uuidString + ".block.x", blockLocation.getX());
-        checksConfig.set("checks." + uuidString + ".block.y", blockLocation.getY());
-        checksConfig.set("checks." + uuidString + ".block.z", blockLocation.getZ());
-        checksConfig.set("checks." + uuidString + ".block.type", blockTypeUnderSuspect.toString());
-        checksConfig.set("checks." + uuidString + ".block.world", blockLocation.getWorld().getName());
-        checks.save();
+
+        FileConfiguration recoveryConfig = recoveryController.getConfig();
+        recoveryConfig.set("checks." + uuidString + ".suspect", suspect.getUniqueId().toString());
+        recoveryConfig.set("checks." + uuidString + ".block.x", blockLocation.getX());
+        recoveryConfig.set("checks." + uuidString + ".block.y", blockLocation.getY());
+        recoveryConfig.set("checks." + uuidString + ".block.z", blockLocation.getZ());
+        recoveryConfig.set("checks." + uuidString + ".block.type", blockTypeUnderSuspect.toString());
+        recoveryConfig.set("checks." + uuidString + ".block.world", blockLocation.getWorld().getName());
+        recoveryController.saveConfig();
 
         isPaused = false;
 
@@ -152,9 +166,12 @@ public class CheatCheck {
         moderBossBar.removeAll();
         bossBarsController.cancel();
 
-        Checks checks = UltimateCheatCheck.getChecks();
-        checks.getConfig().set("checks." + uuid.toString(), null);
-        checks.save();
+        /*
+         * Here the check record is deleted
+         */
+        FileConfiguration recoveryConfig = recoveryController.getConfig();
+        recoveryConfig.set("checks." + uuid.toString(), null);
+        recoveryController.saveConfig();
 
     }
 
