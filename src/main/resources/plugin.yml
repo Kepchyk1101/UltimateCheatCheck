@@ -1,22 +1,22 @@
 name: UltimateCheatCheck
 version: '${project.version}'
 main: me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck
-api-version: '1.15'
+api-version: '1.13'
 author: Kepchyk1101
 website: https://github.com/Kepchyk1101/UltimateCheatCheck
 softdepend: [PlaceholderAPI]
 commands:
   ultimateCheatCheck:
-    description: Главная команда для всего плагина
+    description: Basic command
     aliases: ucc
 permissions:
   ucc.*:
-    description: Позволяет использовать любые команды
+    description: Master-permission. Allows you to use any commands
     children:
       - ucc.reload
       - ucc.moder
   ucc.moder:
-    description: Позволяет использовать команды /ucc start, /ucc acquit, /ucc condemn, /ucc pause
+    description: Allows you to use /ucc start, /ucc acquit, /ucc condemn, /ucc pause
     children:
       - ucc.start
       - ucc.acquit
@@ -24,28 +24,28 @@ permissions:
       - ucc.pause
       - ucc.help
   ucc.player:
-    description: Позволяет использовать команды /ucc contact, /ucc confess
+    description: Allows you to use /ucc contact, /ucc confess
     default: true
     children:
       - ucc.contact
       - ucc.confess
   ucc.help:
-    description: Позволяет видеть окно помощи при неправильном использовании команды
+    description: Allows you to see a help window when using a command incorrectly
   ucc.immunity:
-    description: Иммунитет к проверкам на читы
+    description: Immunity to cheat checks
   ucc.reload:
-    description: Позволяет использовать команду /ucc reload
+    description: Allows you to use /ucc reload
   ucc.start:
-    description: Позволяет использовать команду /ucc start
+    description: Allows you to use /ucc start
   ucc.acquit:
-    description: Позволяет использовать команду /ucc acquit
+    description: Allows you to use /ucc acquit
   ucc.condemn:
-    description: Позволяет использовать команду /ucc condemn
+    description: Allows you to use /ucc condemn
   ucc.pause:
-    description: Позволяет использовать команду /ucc pause
+    description: Allows you to use /ucc pause
   ucc.contact:
     default: true
-    description: Позволяет использовать команду /ucc contact
+    description: Allows you to use /ucc contact
   ucc.confess:
     default: true
-    description: Позволяет использовать команду /ucc confess
+    description: Allows you to use /ucc confess

@@ -6,7 +6,7 @@
 
     <groupId>com.kepchyk1101</groupId>
     <artifactId>UltimateCheatCheck</artifactId>
-    <version>1.0.2-beta</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>UltimateCheatCheck</name>

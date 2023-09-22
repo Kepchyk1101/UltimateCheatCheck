@@ -1,7 +1,10 @@
 package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
-import me.kepchyk1101.ultimatecheatcheck.utils.*;
+import me.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
+import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.utils.RecoveryController;
+import me.kepchyk1101.ultimatecheatcheck.utils.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

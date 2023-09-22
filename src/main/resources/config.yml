@@ -1,87 +1,87 @@
 configVersion: 1.0
 
-# По-умолчанию доступно 'ru' и 'en'. Если вы хотите свой файл с сообщениями, у вас есть 2 варианта:
-  # 1) Отредактируйте уже существующий(-е) файл(-ы).
-  # 2) Создайте новый файл в папке 'lang' с именем 'messages_КОД.yml' и укажите КОД в поле 'language'.
-    # P.s. Не забудьте перезагрузить плагин/конфиги чтобы изменения вступили в силу :>
-language: ru
+  # By default, available 'en'(English) and 'ru'(Russian). If you want your own message file, you have 2 options:
+  # 1) Edit existing file(s).
+  # 2) Create a new file in the 'lang' folder with the name 'messages_CODE.yml' and specify the CODE in the 'language' field.
+# P.s. Don't forget to reload the plugin/configs for the changes to take effect :>
+language: en
 
-# Уведомления в чат(для игроков с /op) и в консоль об актуальной новой версии плагина.
+# Notifications in chat (for players with /op) and in the console about the current new version of the plugin.
 checkUpdates: false
 
-# Префикс для ВСЕХ сообщений отправляемых игроку. Если вы хотите сообщения без префикса - оставьте поле пустым.
+# Prefix for ALL messages sent to the player. If you want messages without a prefix, leave the field blank.
 messagesPrefix: '&7(&e&lUCC&7) '
 
 CheatCheck:
-  # Эффекты, накладываемые на игрока во время начала проверки.
+  # Effects applied to the player when the check begins.
   EffectsToSuspect:
     - BLINDNESS
-  # Время, которое даётся игроку на предоставление своих контактов модератору для связи. Значение указывается в секундах.
+  # The time given to the player to provide his contacts to the moderator for communication. The value is indicated in seconds.
   Timer: 300
 
 Titles:
-  StartCheckSuspectTitle: "&cПРОВЕРКА НА ЧИТЫ"
-  StartCheckSuspectSubTitle: "&fСледуйте инструкциям в чате"
+  StartCheckSuspectTitle: "&cCHECKING FOR CHEATS"
+  StartCheckSuspectSubTitle: "&fFollow the instructions in the chat"
 
 BossBars:
   # Bar Color: PINK, BLUE, RED, GREEN, YELLOW, WHITE, PURPLE
   # Bar Style: SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
   SuspectBossBar:
-    Text: "Проверка на читы | У вас осталось &c%timeLeft%&r сек."
-    PausedText: "Проверка на читы | Пауза"
+    Text: "CHECKING FOR CHEATS | You have &c%timeLeft%&r seconds left."
+    PausedText: "CHECKING FOR CHEATS | Pause"
     Color: RED
     Style: SOLID
   ModerBossBar:
-    Text: "Проверка для игрока &6%suspect%&r | Осталось &c%timeLeft%&r сек."
-    PausedText: "Проверка для игрока &6%suspect%&r | Пауза"
+    Text: "Check for the player &6%suspect%&r | &c%timeLeft%&r seconds left."
+    PausedText: "Checking for the player &6%suspect%&r | Pause"
     Color: GREEN
     Style: SOLID
 
-# Автоматические наказания.
+# Automatic punishments.
 AutoPunishments:
-  # Команды будут выполняться от имени консоли.
+  # Commands will be executed on behalf of the console.
   Commands:
-    # Подозреваемый покинул игру во время активной проверки на читы.
+    # The suspect left the game during an active cheat check.
     OnSuspectQuit:
       - 'ban %suspect% Отказ от проверки (выход с игры)'
-    # Подозреваемый признался в использовании стороннего ПО.
+    # The suspect admitted to using third-party software.
     OnSuspectConfess:
       - 'ban %suspect% Признание в использовании стороннего ПО'
-    # Модератор признал подозреваемого виновным.
+    # The moderator found the suspect guilty.
     OnSuspectCondemned:
       - 'ban %suspect% Вы признаны виновным в использовании стороннего ПО'
-    # Время подозреваемого, на предоставление контактных данных модератору истекло.
+    # The suspect's time to provide contact information to the moderator has expired.
     OnSuspect`sTimerExpired:
       - 'ban %suspect% Отказ от проверки (время истекло)'
 
 PlayerLocks:
   SendCommands:
-    # Запретить игроку использовать команды?
+    # Prevent a player from using commands?
     Disabled: true
-    # Список разрешённых команд, вне зависимости от поля "Disabled"
+    # List of allowed commands, regardless of the "Disabled" field
     AvailableCommands:
       - '/ucc contact'
       - '/ucc confess'
   SendMessages:
-    # Запретить ли игроку использовать чат?
+    # Should I prevent a player from using chat?
     Disabled: true
   DropItems:
-    # Запретить игроку выкидывать предметы?
+    # Prevent the player from throwing away items?
     Disabled: true
   PickupItems:
-    # Запретить игроку поднимать предметы?
+    # Prevent the player from picking up objects?
     Disabled: true
   Moving:
-    # Запретить игроку перемещаться?
+    # Prevent the player from moving?
     Disabled: true
   Interact:
-    # Запретить игроку использовать ПКМ/ЛКМ по воздуху/блокам?
+    # Prohibit the player from using RMB/LMB in the air/blocks?
     Disabled: true
   MakeDamage:
-    # Запретить игроку наносить урон игрокам/мобам и так далее?
+    # Prevent the player from causing damage to players/mobs, etc?
     Disabled: true
   TakeDamage:
-    # Запретить получать урон от других энтити(Игроки, Мобы и так далее) по подозреваемому?
+    # Prohibit the suspect from receiving damage from other entities (Players, Mobs, etc.)?
     Disabled: true
-    # Воспроизводимый звук игроку при попытке нанести урон подозреваемому.
+    # Sound played to the player when attempting to damage a suspect.
     Sound: ENTITY_ILLUSIONER_PREPARE_MIRROR

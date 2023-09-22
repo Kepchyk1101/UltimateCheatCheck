@@ -3,7 +3,10 @@ package me.kepchyk1101.ultimatecheatcheck;
 import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
-import me.kepchyk1101.ultimatecheatcheck.utils.*;
+import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.utils.RecoveryController;
+import me.kepchyk1101.ultimatecheatcheck.utils.ServerVersion;
+import me.kepchyk1101.ultimatecheatcheck.utils.UpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -129,24 +132,22 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
     }
 
-    private void loadLanguageConfig() { //todo
+    private void loadLanguageConfig() {
 
         File langFile = new File(getDataFolder(), "lang/messages_" + getConfig().getString("language") + ".yml");
 
-        if (langFile.exists()) {
-            messages = YamlConfiguration.loadConfiguration(langFile);
-            return;
+        if (!langFile.exists()) {
+
+            logger.info("§6The localization file specified in the config was not found!");
+            logger.info("§6The standard localization file will be used ...");
+            if (!new File(getDataFolder(), "lang/messages_en.yml").exists())
+                saveResource("lang/messages_en.yml", false);
+            if (!new File(getDataFolder(), "lang/messages_ru.yml").exists())
+                saveResource("lang/messages_ru.yml", false);
+
         }
 
-        if (!new File(getDataFolder(), "lang/messages_ru.yml").exists())
-            saveResource("lang/messages_ru.yml", false);
-        if (!new File(getDataFolder(), "lang/messages_en.yml").exists())
-            saveResource("lang/messages_en.yml", false);
-
-        logger.info("§6The localization file specified in the config was not found!");
-        logger.info("§6The standard localization file will be used ...");
-
-        messages = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lang/messages_ru.yml"));
+        messages = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lang/messages_en.yml"));
 
     }
 
