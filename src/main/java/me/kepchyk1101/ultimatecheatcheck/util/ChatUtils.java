@@ -40,6 +40,7 @@ public class ChatUtils {
 
     private static String colorize(String message) {
 
+        // hex colors (1.16+)
         if (SERVER_VERSION == ServerVersion.V1_16_orHigher) {
 
             Matcher match = HEX_PATTERN.matcher(message);
@@ -52,6 +53,7 @@ public class ChatUtils {
 
         }
 
+        // default mc colors
         return ChatColor.translateAlternateColorCodes('&', message);
 
     }
