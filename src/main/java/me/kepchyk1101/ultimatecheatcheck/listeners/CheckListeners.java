@@ -2,8 +2,8 @@ package me.kepchyk1101.ultimatecheatcheck.listeners;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
-import me.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

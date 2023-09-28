@@ -1,4 +1,4 @@
-package me.kepchyk1101.ultimatecheatcheck.utils;
+package me.kepchyk1101.ultimatecheatcheck.util;
 
 import org.bukkit.configuration.file.FileConfiguration;
 

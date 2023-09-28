@@ -1,10 +1,10 @@
 package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
-import me.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.RecoveryController;
-import me.kepchyk1101.ultimatecheatcheck.utils.ServerVersion;
+import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
+import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,7 +47,7 @@ public class CheatCheck {
         this.uuid = UUID.randomUUID();
         this.suspectLocation = suspect.getLocation();
         this.blockUnderSuspect = suspectLocation.getWorld().getBlockAt(suspectLocation.subtract(0, 1, 0));
-        this. suspectLocation.add(0, 1, 0);
+        this.suspectLocation.add(0, 1, 0);
         this.blockTypeUnderSuspect = blockUnderSuspect.getType();
         this.suspectEffects = new ArrayList<>();
         this.timer = ConfigUtils.getInt("CheatCheck.Timer");
@@ -122,7 +122,8 @@ public class CheatCheck {
          * If it is 1.13.1 and below, it will be teleported to the edge.
          * BoundingBox appeared only in 1.13.2
          */
-        if (plugin.getServerVersion() == ServerVersion.V1_13_2_orHigher) {
+        final ServerVersion serverVersion = plugin.getServerVersion();
+        if (serverVersion == ServerVersion.V1_16_orHigher || serverVersion == ServerVersion.V1_13_2_orHigher) {
             BoundingBox boundingBox = blockUnderSuspect.getBoundingBox();
             suspect.teleport(new Location(
                     blockUnderSuspect.getWorld(),
@@ -150,7 +151,7 @@ public class CheatCheck {
         recoveryConfig.set("checks." + uuidString + ".block.y", blockLocation.getY());
         recoveryConfig.set("checks." + uuidString + ".block.z", blockLocation.getZ());
         recoveryConfig.set("checks." + uuidString + ".block.type", blockTypeUnderSuspect.toString());
-        recoveryConfig.set("checks." + uuidString + ".block.world", blockLocation.getWorld().getName());
+        recoveryConfig.set("checks." + uuidString + ".block.world", blockLocation.getWorld().getUID().toString());
         recoveryController.saveConfig();
 
         isPaused = false;

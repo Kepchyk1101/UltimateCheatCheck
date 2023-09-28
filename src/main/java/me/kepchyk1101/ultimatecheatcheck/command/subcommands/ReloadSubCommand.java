@@ -1,8 +1,8 @@
 package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
-import me.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

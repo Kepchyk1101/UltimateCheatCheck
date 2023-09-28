@@ -1,4 +1,4 @@
-package me.kepchyk1101.ultimatecheatcheck.utils;
+package me.kepchyk1101.ultimatecheatcheck.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -53,7 +53,7 @@ public class RecoveryController implements Listener {
             OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(config.getString("checks." + key + ".suspect")));
             crashedPlayers.add(player);
 
-            Bukkit.getWorld(config.getString("checks." + key + ".block.world")).getBlockAt(
+            Bukkit.getWorld(UUID.fromString(config.getString("checks." + key + ".block.world"))).getBlockAt(
                     config.getInt("checks." + key + ".block.x"),
                     config.getInt("checks." + key + ".block.y"),
                     config.getInt("checks." + key + ".block.z")

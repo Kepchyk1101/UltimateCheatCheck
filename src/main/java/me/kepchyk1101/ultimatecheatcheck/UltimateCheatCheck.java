@@ -3,10 +3,10 @@ package me.kepchyk1101.ultimatecheatcheck;
 import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
-import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.RecoveryController;
-import me.kepchyk1101.ultimatecheatcheck.utils.ServerVersion;
-import me.kepchyk1101.ultimatecheatcheck.utils.UpdateChecker;
+import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
+import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
+import me.kepchyk1101.ultimatecheatcheck.util.UpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -89,11 +89,19 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
     private ServerVersion checkServerVersion() {
 
+        // A little stupid, here I check it this way, and a little lower it’s different :)
+
+        final String version = getServer().getClass().getPackage().getName().split("\\.")[3];
+        final String subVersion = version.replace("v1_", "").replaceAll("_R\\d", "");
+        if (Integer.parseInt(subVersion) >= 16) {
+            return ServerVersion.V1_16_orHigher;
+        }
+
         try {
             Class.forName("org.bukkit.util.BoundingBox");
-            return serverVersion = ServerVersion.V1_13_2_orHigher;
+            return ServerVersion.V1_13_2_orHigher;
         } catch (ClassNotFoundException e) {
-            return serverVersion = ServerVersion.V1_13_1_orLower;
+            return ServerVersion.V1_13_1_orLower;
         }
 
     }

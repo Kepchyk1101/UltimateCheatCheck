@@ -1,4 +1,4 @@
-package me.kepchyk1101.ultimatecheatcheck.utils;
+package me.kepchyk1101.ultimatecheatcheck.util;
 
 import me.kepchyk1101.ultimatecheatcheck.events.CancellableEvent;
 import org.bukkit.Bukkit;

@@ -2,9 +2,9 @@ package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.events.*;
-import me.kepchyk1101.ultimatecheatcheck.utils.ChatUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.utils.EventUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
+import me.kepchyk1101.ultimatecheatcheck.util.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
