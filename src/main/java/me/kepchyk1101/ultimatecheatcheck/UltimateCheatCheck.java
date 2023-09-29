@@ -142,20 +142,26 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
     private void loadLanguageConfig() {
 
-        File langFile = new File(getDataFolder(), "lang/messages_" + getConfig().getString("language") + ".yml");
+        final String langPath = "lang/messages_" + getConfig().getString("language") + ".yml";
+        File langFile = new File(getDataFolder(), langPath);
 
         if (!langFile.exists()) {
 
             logger.info("§6The localization file specified in the config was not found!");
             logger.info("§6The standard localization file will be used ...");
+
             if (!new File(getDataFolder(), "lang/messages_en.yml").exists())
                 saveResource("lang/messages_en.yml", false);
             if (!new File(getDataFolder(), "lang/messages_ru.yml").exists())
                 saveResource("lang/messages_ru.yml", false);
+            if (!new File(getDataFolder(), "lang/messages_ua.yml").exists())
+                saveResource("lang/messages_ua.yml", false);
+            if (!new File(getDataFolder(), "lang/messages_hu.yml").exists())
+                saveResource("lang/messages_hu.yml", false);
 
         }
 
-        messages = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lang/messages_en.yml"));
+        messages = YamlConfiguration.loadConfiguration(new File(getDataFolder(), langPath));
 
     }
 

@@ -1,6 +1,6 @@
 configVersion: 1.0
 
-  # By default, available 'en'(English), 'ru'(Russian) and 'ua'(Ukrainian). If you want your own message file, you have 2 options:
+  # By default, available 'en'(English), 'ru'(Russian), 'ua'(Ukrainian) and 'hu'(Hungarian). If you want your own message file, you have 2 options:
   # 1) Edit existing file(s).
   # 2) Create a new file in the 'lang' folder with the name 'messages_CODE.yml' and specify the CODE in the 'language' field.
 # P.s. Don't forget to reload the plugin/configs for the changes to take effect :>
