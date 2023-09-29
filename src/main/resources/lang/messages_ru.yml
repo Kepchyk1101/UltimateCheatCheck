@@ -51,7 +51,6 @@ errors:
   cannotSummonYourself: "&cВы не можете вызвать самого себя на проверку!"
   cannotStopNotStartedCheatCheck: "&cВы не можете остановить не начавшуюся проверку!"
   cannotPauseNotStartedCheatCheck: "&cВы не можете приостановить не начавшуюся проверку!"
-  cannotCancelNotStartedCheatCheck: "&cВы не можете закончить не начавшуюся проверку!"
   cannotSendMessageToModer: "&cВы не можете отправить данные для связи модератору, так как вы не на проверке!"
   youCannotUseChat: "&cВы не можете использовать чат, так-как вы находитесь на проверке на читы!"
   youCannotUseCommands: "&cВы не можете использовать команды, так-как вы находитесь на проверке на читы!"

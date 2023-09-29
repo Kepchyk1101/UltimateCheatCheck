@@ -98,7 +98,7 @@ public class CheatCheckManager {
             }
 
         } else
-            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cannotCancelNotStartedCheatCheck"));
+            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cannotStopNotStartedCheatCheck"));
 
     }
 

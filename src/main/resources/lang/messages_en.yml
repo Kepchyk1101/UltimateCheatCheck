@@ -6,7 +6,7 @@ misc:
     - "&e/ucc reload - &bReload plugin configuration files"
     - "&e/ucc start <player> - &aStart checking"
     - "&e/ucc acquit <player> - &aFinish the check (Found not guilty)"
-    - "&e/ucc condemn <player> - &aОFinish the check (Found guilty)"
+    - "&e/ucc condemn <player> - &aFinish the check (Found guilty)"
     - "&e/ucc pause <player> - &aPause the cheat check timer"
     - "&e/ucc contact <contacts> - &9Provide contact information to the moderator (Player)"
     - "&e/ucc confess - &9Admit cheating and finish the check early (Player)"
@@ -21,7 +21,7 @@ cheatCheck:
     suspectConfessed: "&cThe check is completed. The suspect admitted to using third-party software!"
     suspectQuit: "&cThe check is completed. Suspect &6%suspect%&c &cleft the game!"
     suspectsTimerExpired: "&cThe check is completed. The suspect's timer has expired."
-    youReceivedContacts: "&Suspect &6%suspect% &asent you a message: \"&6%contacts%&a\""
+    youReceivedContacts: "&aSuspect &6%suspect% &asent you a message: \"&6%contacts%&a\""
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lCHECKING FOR CHEATS"
@@ -51,7 +51,6 @@ errors:
   cannotSummonYourself: "&cYou cannot call yourself to cheat check!"
   cannotStopNotStartedCheatCheck: "&cYou cannot stop a cheat check that has not started!"
   cannotPauseNotStartedCheatCheck: "&cYou cannot pause a cheat check that has not started!"
-  cannotCancelNotStartedCheatCheck: "&cYou cannot finish a cheat check that has not started!"
   cannotSendMessageToModer: "&cYou cannot send contact information to the moderator, since you are not on cheat check!"
   youCannotUseChat: "&cYou cannot use the chat because you are being checked for cheats!"
   youCannotUseCommands: "&cYou cannot use commands because you are being checked for cheats!"
