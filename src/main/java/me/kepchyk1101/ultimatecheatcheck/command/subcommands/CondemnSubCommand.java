@@ -1,6 +1,6 @@
 package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
 
-import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.Bukkit;
@@ -26,7 +26,7 @@ public class CondemnSubCommand implements SubCommand {
                     Player suspect = Bukkit.getPlayer(args[0]);
                     if (suspect != null)
 
-                        CheatCheckManager.condemnPlayer(suspect, (Player) commandSender);
+                        CheatCheckManager.getInstance().condemnPlayer(suspect, (Player) commandSender);
 
                     else
                         ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));

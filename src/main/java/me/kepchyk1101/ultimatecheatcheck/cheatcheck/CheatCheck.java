@@ -1,6 +1,7 @@
 package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
@@ -95,7 +96,7 @@ public class CheatCheck {
                     moderBossBar.setProgress(0.0D);
                 }
 
-                if (counter-- < 1) CheatCheckManager.timerExpired(suspect);
+                if (counter-- < 1) CheatCheckManager.getInstance().timerExpired(suspect);
 
             }
 

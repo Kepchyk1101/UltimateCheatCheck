@@ -1,6 +1,6 @@
 package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
 
-import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ public class ConfessSubCommand implements SubCommand {
 
         if (commandSender instanceof Player) {
 
-            CheatCheckManager.suspectConfess((Player) commandSender);
+            CheatCheckManager.getInstance().suspectConfess((Player) commandSender);
 
         } else
             ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));

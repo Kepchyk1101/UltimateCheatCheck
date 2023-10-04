@@ -1,6 +1,6 @@
 package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
 
-import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.command.CommandSender;
@@ -20,7 +20,7 @@ public class ContactSubCommand implements SubCommand {
 
             } else {
 
-                CheatCheckManager.playerContact((Player) commandSender, args[0]);
+                CheatCheckManager.getInstance().playerContact((Player) commandSender, args[0]);
 
             }
 

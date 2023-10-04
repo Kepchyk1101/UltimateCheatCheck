@@ -1,6 +1,6 @@
 package me.kepchyk1101.ultimatecheatcheck;
 
-import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.config.Localization;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
@@ -67,7 +67,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
     public void onDisable() {
 
         // Correct completion of all checks during a normal server shutdown
-        CheatCheckManager.completionAllChecks();
+        CheatCheckManager.getInstance().completionAllChecks();
         HandlerList.unregisterAll(checkListeners);
 
         // Clear recovery file

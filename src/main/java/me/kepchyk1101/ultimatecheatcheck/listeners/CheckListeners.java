@@ -1,7 +1,7 @@
 package me.kepchyk1101.ultimatecheatcheck.listeners;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
-import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.Sound;
@@ -15,12 +15,14 @@ import org.bukkit.event.player.*;
 
 public class CheckListeners implements Listener {
 
+    private final CheatCheckManager cheatCheckManager = CheatCheckManager.getInstance();
+
     @EventHandler(priority = EventPriority.MONITOR)
     private void onSuspectQuit(PlayerQuitEvent event) {
 
         final Player player = event.getPlayer();
-        if (CheatCheckManager.isChecking(player)) {
-            CheatCheckManager.suspectQuit(player);
+        if (cheatCheckManager.isChecking(player)) {
+            cheatCheckManager.getInstance().suspectQuit(player);
         }
 
     }
@@ -29,8 +31,8 @@ public class CheckListeners implements Listener {
     private void onModerQuit(PlayerQuitEvent event) {
 
         final Player player = event.getPlayer();
-        if (CheatCheckManager.isModer(player)) {
-            CheatCheckManager.moderQuit(player);
+        if (cheatCheckManager.isModer(player)) {
+            cheatCheckManager.moderQuit(player);
         }
 
     }
@@ -39,7 +41,7 @@ public class CheckListeners implements Listener {
     private void onSuspectMove(PlayerMoveEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.Moving.Disabled") &&
-                CheatCheckManager.isChecking(event.getPlayer()))
+                cheatCheckManager.isChecking(event.getPlayer()))
 
             event.setCancelled(true);
 
@@ -49,7 +51,7 @@ public class CheckListeners implements Listener {
     private void onSuspectInteract(PlayerInteractEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.Interact.Disabled") &&
-                CheatCheckManager.isChecking(event.getPlayer()))
+                cheatCheckManager.isChecking(event.getPlayer()))
 
             event.setCancelled(true);
 
@@ -61,7 +63,7 @@ public class CheckListeners implements Listener {
         final Entity damaged = event.getEntity();
         final Entity damager = event.getDamager();
 
-        if (damaged instanceof Player && CheatCheckManager.isChecking((Player) damaged)) {
+        if (damaged instanceof Player && cheatCheckManager.isChecking((Player) damaged)) {
 
             if (damager instanceof Player) {
 
@@ -86,7 +88,7 @@ public class CheckListeners implements Listener {
 
         final Entity damager = event.getDamager();
 
-        if (damager instanceof Player && CheatCheckManager.isChecking((Player) damager))
+        if (damager instanceof Player && cheatCheckManager.isChecking((Player) damager))
             event.setCancelled(true);
 
     }
@@ -97,7 +99,7 @@ public class CheckListeners implements Listener {
         final Player player = event.getPlayer();
 
         if (ConfigUtils.getBoolean("PlayerLocks.SendCommands.Disabled") &&
-                CheatCheckManager.isChecking(player)) {
+                cheatCheckManager.isChecking(player)) {
 
             for (String availableCommand : ConfigUtils.getStrings("PlayerLocks.SendCommands.AvailableCommands"))
                 if (event.getMessage().startsWith(availableCommand))
@@ -114,7 +116,7 @@ public class CheckListeners implements Listener {
     private void onSuspectChat(AsyncPlayerChatEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.SendMessages.Disabled") &&
-                CheatCheckManager.isChecking(event.getPlayer())) {
+                cheatCheckManager.isChecking(event.getPlayer())) {
 
             event.setCancelled(true);
             ChatUtils.sendMessage(event.getPlayer(), ConfigUtils.getMessage("errors.youCannotUseChat"));
@@ -127,7 +129,7 @@ public class CheckListeners implements Listener {
     private void onSuspectDropItem(PlayerDropItemEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.DropItems.Disabled") &&
-                CheatCheckManager.isChecking(event.getPlayer()))
+                cheatCheckManager.isChecking(event.getPlayer()))
 
             event.setCancelled(true);
 
@@ -137,7 +139,7 @@ public class CheckListeners implements Listener {
     private void onSuspectPickupItem(PlayerPickupItemEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.PickupItems.Disabled") &&
-                CheatCheckManager.isChecking(event.getPlayer()))
+                cheatCheckManager.isChecking(event.getPlayer()))
 
             event.setCancelled(true);
 

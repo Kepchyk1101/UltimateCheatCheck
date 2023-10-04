@@ -1,6 +1,7 @@
-package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
+package me.kepchyk1101.ultimatecheatcheck.managers;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
+import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.events.*;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
@@ -14,10 +15,11 @@ import java.util.Map;
 
 public class CheatCheckManager {
 
+    private static CheatCheckManager instance;
     private static final UltimateCheatCheck PLUGIN = UltimateCheatCheck.getInstance();
     private static final Map<Player, CheatCheck> ACTIVE_CHECKS = new HashMap<>();
 
-    public static void callPlayer(Player suspect, Player moderator) {
+    public void callPlayer(Player suspect, Player moderator) {
 
         if (!ACTIVE_CHECKS.containsKey(suspect)) {
 
@@ -50,7 +52,7 @@ public class CheatCheckManager {
     }
 
     // Признать игрока невиновным
-    public static void acquitPlayer(Player suspect, Player moderator) {
+    public void acquitPlayer(Player suspect, Player moderator) {
 
         if (ACTIVE_CHECKS.containsKey(suspect)) {
 
@@ -76,7 +78,7 @@ public class CheatCheckManager {
     }
 
     // Признать игрока виновным
-    public static void condemnPlayer(Player suspect, Player moderator) {
+    public void condemnPlayer(Player suspect, Player moderator) {
 
         if (ACTIVE_CHECKS.containsKey(suspect)) {
 
@@ -103,7 +105,7 @@ public class CheatCheckManager {
     }
 
     // Приостановить таймер проверки
-    public static void suspendCheck(Player suspect, Player moderator) {
+    public void suspendCheck(Player suspect, Player moderator) {
 
         if (ACTIVE_CHECKS.containsKey(suspect)) {
 
@@ -128,7 +130,7 @@ public class CheatCheckManager {
     }
 
     // Игрок признался самостоятельно
-    public static void suspectConfess(Player suspect) {
+    public void suspectConfess(Player suspect) {
 
         if (ACTIVE_CHECKS.containsKey(suspect)) {
 
@@ -148,7 +150,7 @@ public class CheatCheckManager {
 
     }
 
-    public static void playerContact(Player suspect, String contacts) {
+    public void playerContact(Player suspect, String contacts) {
 
         if (ACTIVE_CHECKS.containsKey(suspect)) {
 
@@ -169,7 +171,7 @@ public class CheatCheckManager {
 
     }
 
-    public static void suspectQuit(Player suspect) {
+    public void suspectQuit(Player suspect) {
 
         CheatCheck cheatCheck = ACTIVE_CHECKS.get(suspect);
 
@@ -184,7 +186,7 @@ public class CheatCheckManager {
 
     }
 
-    public static void moderQuit(Player moder) {
+    public void moderQuit(Player moder) {
 
         CheatCheck cheatCheck = findByModer(moder);
 
@@ -197,7 +199,7 @@ public class CheatCheckManager {
 
     }
 
-    public static void timerExpired(Player suspect) {
+    public void timerExpired(Player suspect) {
 
         CheatCheck cheatCheck = ACTIVE_CHECKS.get(suspect);
 
@@ -210,7 +212,7 @@ public class CheatCheckManager {
 
     }
 
-    public static void completionAllChecks() {
+    public void completionAllChecks() {
 
         if (ACTIVE_CHECKS.size() > 0) {
 
@@ -226,26 +228,33 @@ public class CheatCheckManager {
 
     }
 
-    public static boolean isChecking(Player suspect) {
+    public boolean isChecking(Player suspect) {
         return ACTIVE_CHECKS.containsKey(suspect);
     }
 
-    public static boolean isModer(Player player) {
+    public boolean isModer(Player player) {
         for (CheatCheck cheatCheck : ACTIVE_CHECKS.values())
             if (cheatCheck.getModerator() == player)
                 return true;
         return false;
     }
 
-    private static CheatCheck findByModer(Player moder) {
+    private CheatCheck findByModer(Player moder) {
         for (CheatCheck cheatCheck : ACTIVE_CHECKS.values())
             if (cheatCheck.getModerator() == moder)
                 return cheatCheck;
         return null;
     }
 
-    public static CheatCheck findBySuspect(Player suspect) {
+    public CheatCheck findBySuspect(Player suspect) {
         return ACTIVE_CHECKS.get(suspect);
+    }
+
+    public static CheatCheckManager getInstance() {
+        if (instance == null) {
+            instance = new CheatCheckManager();
+        }
+        return instance;
     }
 
 }
