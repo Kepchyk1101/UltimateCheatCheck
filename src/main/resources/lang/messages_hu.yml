@@ -2,12 +2,12 @@ misc:
   configsSuccessfullyReloaded: "&aA konfigurálció újratöltve!"
   availableNewPluginVersion: "&aEgy újabb verzió érhető el: &e%latestVersion%&a. Itt tudod letölteni: &6https://www.spigotmc.org/resources/ultimatecheatcheck-1-12-2-1-20-1.112711/"
   helpCommandMessage:
-    - "&6======== &eHelp &9/ucc &6========"
+    - "&6======== &eSegítség &9/ucc &6========"
     - "&e/ucc reload - &bÚjratölti a plugin konfigurálcióját"
     - "&e/ucc start <játékos> - &aEllenőrzés indítása"
     - "&e/ucc acquit <játékos> - &aAz ellenőrzés befejeződőtt (Nem bűnös)"
-    - "&e/ucc condemn <játékos> - &aОAz ellenőrzés befejeződőtt (Bűnös)"
-    - "&e/ucc pause <játékos> - &aMegállítsa a csalásellenőrzést"
+    - "&e/ucc condemn <játékos> - &aAz ellenőrzés befejeződőtt (Bűnös)"
+    - "&e/ucc pause <játékos> - &aMegállítja a csalásellenőrzést"
     - "&e/ucc contact <kapcsolat> - &9Adja meg adatait a moderátornak (Játékos)"
     - "&e/ucc confess - &9Vallja be hogy csalt és fejezze be gyorsan (Játékos)"
     - "&6====== &eUltimateCheatCheck &6======"
@@ -15,11 +15,11 @@ misc:
 cheatCheck:
   messagesToModer:
     youStartedChecking: "&aFelhívtad a gyanusítottadat &6%suspect%&a egy csalás ellenőrzésre!"
-    youAcquittedSuspect: "&aAz ellenőrzés befejeződött. Megtaláltad a gyanúsítottat &6%suspect%&a ártat!"
+    youAcquittedSuspect: "&aAz ellenőrzés befejeződött. Megtaláltad a gyanúsítottat &6%suspect%&a ártatlan!"
     youCondemnedSuspect: "&cAz ellenőrzés befejeződött. Megtaláltad a gyanúsítottat &6%suspect%&c bűnös!"
     youPausedChecking: "&aSzüneteltette a csalásellenőrzési időzítőt a következőnél &6%suspect%&a!"
     suspectConfessed: "&cAz ellenőrzés befejeződött. A gyanúsított elismerte, hogy harmadik féltől származó szoftvert használt!"
-    suspectQuit: "&cAz ellenőrzés befejeződött. Suspect &6%suspect%&c &celhagyta a játékot!"
+    suspectQuit: "&cAz ellenőrzés befejeződött. Gyanusított &6%suspect%&c &celhagyta a játékot!"
     suspectsTimerExpired: "&cAz ellenőrzés befejeződött. A gyanúsított időmérője lejárt."
     youReceivedContacts: "&Gyanúsított &6%suspect% &üzenetet küldött neked: \"&6%contacts%&a\""
   messagesToSuspect:
@@ -51,10 +51,9 @@ errors:
   cannotSummonYourself: "&cNem ellenőrizheted magadat!"
   cannotStopNotStartedCheatCheck: "&cNem lehet leállítani egy csalásellenőrzést, amely el sem indult!"
   cannotPauseNotStartedCheatCheck: "&cNem szüneteltetheti az el nem indult csalásellenőrzést!"
-  cannotCancelNotStartedCheatCheck: "&cNem fejezheti be azt a csalásellenőrzést, amely még nem indult el!"
-  cannotSendMessageToModer: "&cNem küldhet el elérhetőségi adatokat a moderátornak, mivel nem vagy csalásban!"
+  cannotSendMessageToModer: "&cNem küldhet el elérhetőségi adatokat a moderátornak, mivel nem vagy csalásellenőrzésben!"
   youCannotUseChat: "&cNem használhatod a chatet, mert ellenőrzik, hogy csalsz-e!"
-  youCannotUseCommands: "&cNem használhat parancsokat, mert a rendszer csalást keres!"
+  youCannotUseCommands: "&cNem használhat parancsokat, mert a rendszer ellenőriz téged!"
   youCannotInteractWithSuspect: "&cNem léphetsz interakcióba ezzel a játékossal, mert csalási ellenőrzésre hívtak!"
   youCannotConfess: "&cNem ismerheted be, hogy harmadik féltől származó szoftvert használsz, mert nem vagy ellenőrzés alatt!"
 

@@ -25,7 +25,8 @@ public class ConfigUtils {
     }
 
     public static String getMessage(String path) {
-        return messages.getString(path);
+        final String message = messages.getString(path);
+        return message != null ? message : "&cCannot read config`s message!";
     }
 
     public static List<String> getMessages(String path) {

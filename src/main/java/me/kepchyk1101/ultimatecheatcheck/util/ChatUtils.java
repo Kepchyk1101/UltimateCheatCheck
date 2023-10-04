@@ -30,7 +30,7 @@ public class ChatUtils {
 
     public static String format(String message, @Nullable Player player) {
 
-        if (player != null && UltimateCheatCheck.getInstance().isPlaceholderAPILoaded()) {
+        if (player != null && UltimateCheatCheck.getInstance().isPlaceholderAPICompatibility()) {
             message = PlaceholderAPI.setPlaceholders(player, message);
         }
 

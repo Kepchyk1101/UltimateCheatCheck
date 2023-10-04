@@ -8,14 +8,15 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 
 public class CheckListeners implements Listener {
 
-    @EventHandler
-    private void onSuspectQuit(org.bukkit.event.player.PlayerQuitEvent event) {
+    @EventHandler(priority = EventPriority.MONITOR)
+    private void onSuspectQuit(PlayerQuitEvent event) {
 
         final Player player = event.getPlayer();
         if (CheatCheckManager.isChecking(player)) {
@@ -24,8 +25,8 @@ public class CheckListeners implements Listener {
 
     }
 
-    @EventHandler
-    private void onModerQuit(org.bukkit.event.player.PlayerQuitEvent event) {
+    @EventHandler(priority = EventPriority.MONITOR)
+    private void onModerQuit(PlayerQuitEvent event) {
 
         final Player player = event.getPlayer();
         if (CheatCheckManager.isModer(player)) {
@@ -57,8 +58,8 @@ public class CheckListeners implements Listener {
     @EventHandler
     private void onEntityDamageSuspect(EntityDamageByEntityEvent event) {
 
-        Entity damaged = event.getEntity();
-        Entity damager = event.getDamager();
+        final Entity damaged = event.getEntity();
+        final Entity damager = event.getDamager();
 
         if (damaged instanceof Player && CheatCheckManager.isChecking((Player) damaged)) {
 
@@ -83,7 +84,7 @@ public class CheckListeners implements Listener {
     @EventHandler
     private void onSuspectDamageEntity(EntityDamageByEntityEvent event) {
 
-        Entity damager = event.getDamager();
+        final Entity damager = event.getDamager();
 
         if (damager instanceof Player && CheatCheckManager.isChecking((Player) damager))
             event.setCancelled(true);
@@ -93,7 +94,7 @@ public class CheckListeners implements Listener {
     @EventHandler
     private void onSuspectCommandPreprocess(PlayerCommandPreprocessEvent event) {
 
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
 
         if (ConfigUtils.getBoolean("PlayerLocks.SendCommands.Disabled") &&
                 CheatCheckManager.isChecking(player)) {
