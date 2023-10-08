@@ -13,31 +13,11 @@ public class PauseSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (commandSender instanceof Player) {
-
-            if (commandSender.hasPermission("ucc.pause")) {
-
-                if (args.length == 0) {
-
-                    ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.pause"));
-
-                } else {
-
-                    Player suspect = Bukkit.getPlayer(args[0]);
-                    if (suspect != null)
-
-                        CheatCheckManager.getInstance().suspendCheck(suspect, (Player) commandSender);
-
-                    else
-                        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
-
-                }
-
-            } else
-                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
-
-        } else
-            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
+        final Player suspect = Bukkit.getPlayer(args[0]);
+        if (suspect != null)
+            CheatCheckManager.getInstance().suspendCheck(suspect, (Player) commandSender);
+        else
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
 
         return true;
 
@@ -46,6 +26,26 @@ public class PauseSubCommand implements SubCommand {
     @Override
     public String getName() {
         return "pause";
+    }
+
+    @Override
+    public String getPermission() {
+        return "ucc.pause";
+    }
+
+    @Override
+    public int requiredArgs() {
+        return 1;
+    }
+
+    @Override
+    public boolean onlyPlayer() {
+        return true;
+    }
+
+    @Override
+    public String usage() {
+        return ConfigUtils.getMessage("wrongCommandUsages.pause");
     }
 
 }

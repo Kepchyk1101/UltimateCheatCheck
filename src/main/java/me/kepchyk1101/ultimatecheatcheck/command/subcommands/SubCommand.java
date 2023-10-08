@@ -9,4 +9,14 @@ public interface SubCommand {
 
     String getName();
 
+    String getPermission();
+
+    int requiredArgs();
+
+    String usage();
+
+    default boolean onlyPlayer() {
+        return false;
+    }
+
 }

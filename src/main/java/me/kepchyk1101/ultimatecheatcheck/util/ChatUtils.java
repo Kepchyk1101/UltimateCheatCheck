@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 public class ChatUtils {
 
     private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
-    private static final ServerVersion SERVER_VERSION = UltimateCheatCheck.getInstance().getServerVersion();
 
     public static void sendMessage(CommandSender recipient, String message) {
 
@@ -41,7 +40,7 @@ public class ChatUtils {
     private static String colorize(String message) {
 
         // hex colors (1.16+)
-        if (SERVER_VERSION == ServerVersion.V1_16_orHigher) {
+        if (UltimateCheatCheck.getInstance().getServerVersion() == ServerVersion.V1_16_orHigher) {
 
             Matcher match = HEX_PATTERN.matcher(message);
             while (match.find()) {

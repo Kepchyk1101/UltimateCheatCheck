@@ -11,13 +11,8 @@ public class ReloadSubCommand implements SubCommand{
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (commandSender.hasPermission("ucc.reload")) {
-
-            UltimateCheatCheck.getInstance().reloadConfigs();
-            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("misc.configsSuccessfullyReloaded"));
-
-        } else
-            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
+        UltimateCheatCheck.getInstance().reloadConfigs();
+        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("misc.configsSuccessfullyReloaded"));
 
         return true;
 
@@ -26,6 +21,21 @@ public class ReloadSubCommand implements SubCommand{
     @Override
     public String getName() {
         return "reload";
+    }
+
+    @Override
+    public String getPermission() {
+        return "ucc.reload";
+    }
+
+    @Override
+    public int requiredArgs() {
+        return 0;
+    }
+
+    @Override
+    public String usage() {
+        return ConfigUtils.getMessage("wrongCommandUsages.reload");
     }
 
 }

@@ -13,37 +13,18 @@ public class StartSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (commandSender instanceof Player) {
+        final Player suspect = Bukkit.getPlayer(args[0]);
+        if (suspect != null) {
 
-            if (commandSender.hasPermission("ucc.start")) {
+            if (!(suspect == commandSender)) {
 
-                if (args.length == 0) {
-
-                    ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("wrongCommandUsages.start"));
-
-                } else {
-
-                    Player suspect = Bukkit.getPlayer(args[0]);
-
-                    if (suspect != null) {
-
-                        if (!(suspect == commandSender)) {
-
-                            CheatCheckManager.getInstance().callPlayer(suspect, (Player) commandSender);
-
-                        } else
-                            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.cannotSummonYourself"));
-
-                    } else
-                        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
-
-                }
+                CheatCheckManager.getInstance().callPlayer(suspect, (Player) commandSender);
 
             } else
-                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
+                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.cannotSummonYourself"));
 
         } else
-            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
 
         return true;
 
@@ -52,6 +33,26 @@ public class StartSubCommand implements SubCommand {
     @Override
     public String getName() {
         return "start";
+    }
+
+    @Override
+    public String getPermission() {
+        return "ucc.start";
+    }
+
+    @Override
+    public int requiredArgs() {
+        return 1;
+    }
+
+    @Override
+    public String usage() {
+        return ConfigUtils.getMessage("wrongCommandUsages.start");
+    }
+
+    @Override
+    public boolean onlyPlayer() {
+        return true;
     }
 
 }

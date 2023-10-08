@@ -12,12 +12,7 @@ public class ConfessSubCommand implements SubCommand {
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        if (commandSender instanceof Player) {
-
-            CheatCheckManager.getInstance().suspectConfess((Player) commandSender);
-
-        } else
-            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
+        CheatCheckManager.getInstance().suspectConfess((Player) commandSender);
 
         return true;
 
@@ -26,6 +21,26 @@ public class ConfessSubCommand implements SubCommand {
     @Override
     public String getName() {
         return "confess";
+    }
+
+    @Override
+    public String getPermission() {
+        return null;
+    }
+
+    @Override
+    public int requiredArgs() {
+        return 0;
+    }
+
+    @Override
+    public String usage() {
+        return ConfigUtils.getMessage("wrongCommandUsages");
+    }
+
+    @Override
+    public boolean onlyPlayer() {
+        return true;
     }
 
 }

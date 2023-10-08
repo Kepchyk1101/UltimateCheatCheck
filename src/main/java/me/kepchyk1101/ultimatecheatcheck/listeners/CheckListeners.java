@@ -22,7 +22,7 @@ public class CheckListeners implements Listener {
 
         final Player player = event.getPlayer();
         if (cheatCheckManager.isChecking(player)) {
-            cheatCheckManager.getInstance().suspectQuit(player);
+            cheatCheckManager.suspectQuit(player);
         }
 
     }

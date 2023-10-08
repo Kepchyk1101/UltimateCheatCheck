@@ -41,7 +41,25 @@ public class UCCCommand implements TabExecutor {
             final String subCommandArg = args[0];
             for (SubCommand subCommand : subCommands) {
                 if (subCommand.getName().equalsIgnoreCase(subCommandArg)) {
+
+                    if (subCommand.onlyPlayer() && !(commandSender instanceof Player)) {
+                        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.commandCanUsedOnlyByPlayer"));
+                        return true;
+                    }
+
+                    final String subCommandPermission = subCommand.getPermission();
+                    if (subCommandPermission != null && !commandSender.hasPermission(subCommandPermission)) {
+                        ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
+                        return true;
+                    }
+
+                    if (args.length - 1 < subCommand.requiredArgs()) {
+                        ChatUtils.sendMessage(commandSender, subCommand.usage());
+                        return true;
+                    }
+
                     return subCommand.onSubCommand(commandSender, Arrays.copyOfRange(args, 1, args.length));
+
                 }
             }
 
