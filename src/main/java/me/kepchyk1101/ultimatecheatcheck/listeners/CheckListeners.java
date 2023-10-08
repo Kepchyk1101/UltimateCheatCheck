@@ -68,11 +68,17 @@ public class CheckListeners implements Listener {
             if (damager instanceof Player) {
 
                 ChatUtils.sendMessage(damager, ConfigUtils.getMessage("errors.youCannotInteractWithSuspect"));
-                try {
-                    Sound sound = Sound.valueOf(ConfigUtils.getString("PlayerLocks.TakeDamage.Sound"));
-                    ((Player) damager).playSound(damaged.getLocation(), sound, 1f, 1f);
-                } catch (IllegalArgumentException e) {
-                    UltimateCheatCheck.getInstance().getLogger().info("§6Unknown sound. (PlayerLocks.TakeDamage.Sound) The plugin is not broken.");
+                final String soundString = ConfigUtils.getString("PlayerLocks.TakeDamage.Sound");
+
+                if (!soundString.equalsIgnoreCase("none")) {
+
+                    try {
+                        Sound sound = Sound.valueOf(ConfigUtils.getString("PlayerLocks.TakeDamage.Sound"));
+                        ((Player) damager).playSound(damaged.getLocation(), sound, 1f, 1f);
+                    } catch (IllegalArgumentException e) {
+                        UltimateCheatCheck.getInstance().getLogger().info("§6Unknown sound. (PlayerLocks.TakeDamage.Sound) The plugin is not broken.");
+                    }
+
                 }
 
             }

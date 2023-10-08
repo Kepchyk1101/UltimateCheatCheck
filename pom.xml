@@ -6,7 +6,7 @@
 
     <groupId>me.kepchyk1101</groupId>
     <artifactId>UltimateCheatCheck</artifactId>
-    <version>1.1.2</version>
+    <version>1.2.0-beta</version>
     <packaging>jar</packaging>
 
     <name>UltimateCheatCheck</name>
@@ -35,7 +35,7 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>me.kepchyk1101.ultimatecheatcheck.util</shadedPattern>
+                            <shadedPattern>me.kepchyk1101.ultimatecheatcheck.util.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

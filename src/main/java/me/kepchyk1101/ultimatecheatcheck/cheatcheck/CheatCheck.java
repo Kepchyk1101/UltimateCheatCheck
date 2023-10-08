@@ -2,10 +2,7 @@ package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
-import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
-import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
-import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
+import me.kepchyk1101.ultimatecheatcheck.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -118,21 +115,7 @@ public class CheatCheck {
 
         blockUnderSuspect.setType(Material.BEDROCK);
 
-        /*
-         * If the server version is 1.13.2 and higher, the player will be teleported to the center of the block.
-         * If it is 1.13.1 and below, it will be teleported to the edge.
-         * BoundingBox appeared only in 1.13.2
-         */
-        final ServerVersion serverVersion = plugin.getServerVersion();
-        if (serverVersion == ServerVersion.V1_16_orHigher || serverVersion == ServerVersion.V1_13_2_orHigher) {
-            BoundingBox boundingBox = blockUnderSuspect.getBoundingBox();
-            suspect.teleport(new Location(
-                    blockUnderSuspect.getWorld(),
-                    boundingBox.getCenterX(),
-                    boundingBox.getCenterY() + 0.5,
-                    boundingBox.getCenterZ()));
-        } else
-            suspect.teleport(blockUnderSuspect.getLocation().add(0, 1, 0));
+        suspect.teleport(BlockUtils.getCenteredBlockLocation(blockUnderSuspect).add(0, 0.5, 0));
 
         suspectBossBar.addPlayer(suspect);
         moderBossBar.addPlayer(moderator);

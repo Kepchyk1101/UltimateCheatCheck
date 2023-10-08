@@ -9,8 +9,4 @@ public interface SubCommand {
 
     String getName();
 
-    //String getUsage();
-
-    //String getPermission();
-
 }

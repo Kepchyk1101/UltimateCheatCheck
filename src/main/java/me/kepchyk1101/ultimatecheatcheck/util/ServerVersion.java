@@ -4,8 +4,6 @@ public enum ServerVersion {
 
     V1_16_orHigher,
 
-    V1_13_2_orHigher,
-
-    V1_13_1_orLower
+    V1_15_2_orLower
 
 }

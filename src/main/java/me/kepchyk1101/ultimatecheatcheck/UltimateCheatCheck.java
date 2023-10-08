@@ -91,20 +91,10 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
     private ServerVersion checkServerVersion() {
 
-        // A little stupid, here I check it this way, and a little lower it’s different :)
-
         final String version = getServer().getClass().getPackage().getName().split("\\.")[3];
         final String subVersion = version.replace("v1_", "").replaceAll("_R\\d", "");
-        if (Integer.parseInt(subVersion) >= 16) {
-            return ServerVersion.V1_16_orHigher;
-        }
 
-        try {
-            Class.forName("org.bukkit.util.BoundingBox");
-            return ServerVersion.V1_13_2_orHigher;
-        } catch (ClassNotFoundException e) {
-            return ServerVersion.V1_13_1_orLower;
-        }
+        return (Integer.parseInt(subVersion) >= 16) ? ServerVersion.V1_16_orHigher : ServerVersion.V1_15_2_orLower;
 
     }
 

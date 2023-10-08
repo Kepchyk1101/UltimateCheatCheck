@@ -36,7 +36,7 @@ cheatCheck:
       - "&a║ &aThe moderator may pause your timer."
       - "&a║ &aYou can admit to using third party software."
       - "&a╚ &7(&e/ucc confess&7)&c."
-    youAcquitted: "&The check is completed successfully by moderator &6%moder%&a. You can be free!"
+    youAcquitted: "&aThe check is completed successfully by moderator &6%moder%&a. You can be free!"
     yourCheckPaused: "&aModerator &6%moder%&a has paused your cheat check timer!"
     youSentContacts: "&aYou have successfully sent a message to moderator &6%moder%&a. Message: \"&6%contacts%&a\""
     moderQuit: "&cThe check is completed. Your moderator &6%moder%&c has left the game!"
