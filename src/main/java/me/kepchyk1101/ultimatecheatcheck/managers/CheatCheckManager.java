@@ -64,9 +64,9 @@ public class CheatCheckManager {
             ACTIVE_CHECKS.remove(suspect);
 
             ChatUtils.sendMessage(suspect, ConfigUtils.getMessage("cheatCheck.messagesToSuspect.youAcquitted")
-                    .replace("%moder%", suspect.getName()));
+                    .replace("%moder%", moderator.getName()));
             ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youAcquittedSuspect")
-                    .replace("%suspect%", moderator.getName()));
+                    .replace("%suspect%", suspect.getName()));
 
             if (ACTIVE_CHECKS.size() == 0) {
                 HandlerList.unregisterAll(PLUGIN.getCheckListeners());
