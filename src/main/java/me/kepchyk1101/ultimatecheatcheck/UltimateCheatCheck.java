@@ -111,7 +111,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
     private void checkIntegrationsCompatibility() {
         this.placeholderAPICompatibility = getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
         if (this.placeholderAPICompatibility) {
-            logger.info("PlaceholderAPI detected, placeholder support enabled !");
+            logger.info("PlaceholderAPI detected, placeholder support enabled!");
         }
     }
 
