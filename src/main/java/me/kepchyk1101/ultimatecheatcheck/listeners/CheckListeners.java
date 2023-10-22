@@ -18,7 +18,7 @@ public class CheckListeners implements Listener {
     private final CheatCheckManager cheatCheckManager = CheatCheckManager.getInstance();
 
     @EventHandler(priority = EventPriority.MONITOR)
-    private void onSuspectQuit(PlayerQuitEvent event) {
+    public void onSuspectQuit(PlayerQuitEvent event) {
 
         final Player player = event.getPlayer();
         if (cheatCheckManager.isChecking(player)) {
@@ -28,7 +28,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    private void onModerQuit(PlayerQuitEvent event) {
+    public void onModerQuit(PlayerQuitEvent event) {
 
         final Player player = event.getPlayer();
         if (cheatCheckManager.isModer(player)) {
@@ -38,7 +38,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectMove(PlayerMoveEvent event) {
+    public void onSuspectMove(PlayerMoveEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.Moving.Disabled") &&
                 cheatCheckManager.isChecking(event.getPlayer()))
@@ -48,7 +48,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectInteract(PlayerInteractEvent event) {
+    public void onSuspectInteract(PlayerInteractEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.Interact.Disabled") &&
                 cheatCheckManager.isChecking(event.getPlayer()))
@@ -58,7 +58,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onEntityDamageSuspect(EntityDamageByEntityEvent event) {
+    public void onEntityDamageSuspect(EntityDamageByEntityEvent event) {
 
         final Entity damaged = event.getEntity();
         final Entity damager = event.getDamager();
@@ -90,7 +90,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectDamageEntity(EntityDamageByEntityEvent event) {
+    public void onSuspectDamageEntity(EntityDamageByEntityEvent event) {
 
         final Entity damager = event.getDamager();
 
@@ -100,7 +100,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectCommandPreprocess(PlayerCommandPreprocessEvent event) {
+    public void onSuspectCommandPreprocess(PlayerCommandPreprocessEvent event) {
 
         final Player player = event.getPlayer();
 
@@ -119,7 +119,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectChat(AsyncPlayerChatEvent event) {
+    public void onSuspectChat(AsyncPlayerChatEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.SendMessages.Disabled") &&
                 cheatCheckManager.isChecking(event.getPlayer())) {
@@ -132,7 +132,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectDropItem(PlayerDropItemEvent event) {
+    public void onSuspectDropItem(PlayerDropItemEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.DropItems.Disabled") &&
                 cheatCheckManager.isChecking(event.getPlayer()))
@@ -142,7 +142,7 @@ public class CheckListeners implements Listener {
     }
 
     @EventHandler
-    private void onSuspectPickupItem(PlayerPickupItemEvent event) {
+    public void onSuspectPickupItem(PlayerPickupItemEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.PickupItems.Disabled") &&
                 cheatCheckManager.isChecking(event.getPlayer()))

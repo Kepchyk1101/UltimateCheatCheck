@@ -37,7 +37,7 @@ public class ChatUtils {
 
     }
 
-    private static String colorize(String message) {
+    public static String colorize(String message) {
 
         // hex colors (1.16+)
         if (UltimateCheatCheck.getInstance().getServerVersion() == ServerVersion.V1_16_orHigher) {

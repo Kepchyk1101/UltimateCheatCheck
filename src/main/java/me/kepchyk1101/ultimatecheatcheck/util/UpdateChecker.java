@@ -57,7 +57,7 @@ public class UpdateChecker implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    private void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
 
         final Player player = event.getPlayer();
         if (ConfigUtils.getBoolean("checkUpdates") && player.isOp()) {

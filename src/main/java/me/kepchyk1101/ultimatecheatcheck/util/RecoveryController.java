@@ -79,7 +79,7 @@ public class RecoveryController implements Listener {
     }
 
     @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
 
         final Player player = event.getPlayer();
 
