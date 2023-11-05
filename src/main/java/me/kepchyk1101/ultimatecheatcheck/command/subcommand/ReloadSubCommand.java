@@ -1,4 +1,4 @@
-package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
+package me.kepchyk1101.ultimatecheatcheck.command.subcommand;
 
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;

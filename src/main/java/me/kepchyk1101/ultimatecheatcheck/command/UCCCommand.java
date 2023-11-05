@@ -1,7 +1,7 @@
 package me.kepchyk1101.ultimatecheatcheck.command;
 
+import me.kepchyk1101.ultimatecheatcheck.command.subcommand.*;
 import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
-import me.kepchyk1101.ultimatecheatcheck.command.subcommands.*;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.Bukkit;

@@ -1,16 +1,15 @@
 package me.kepchyk1101.ultimatecheatcheck.listeners;
 
-import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
-import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.*;
 
 public class CheckListeners implements Listener {
@@ -41,9 +40,9 @@ public class CheckListeners implements Listener {
     public void onSuspectMove(PlayerMoveEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.Moving.Disabled") &&
-                cheatCheckManager.isChecking(event.getPlayer()))
-
+                cheatCheckManager.isChecking(event.getPlayer())) {
             event.setCancelled(true);
+        }
 
     }
 
@@ -51,9 +50,9 @@ public class CheckListeners implements Listener {
     public void onSuspectInteract(PlayerInteractEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.Interact.Disabled") &&
-                cheatCheckManager.isChecking(event.getPlayer()))
-
+                cheatCheckManager.isChecking(event.getPlayer())) {
             event.setCancelled(true);
+        }
 
     }
 
@@ -65,25 +64,11 @@ public class CheckListeners implements Listener {
 
         if (damaged instanceof Player && cheatCheckManager.isChecking((Player) damaged)) {
 
-            if (damager instanceof Player) {
-
-                ChatUtils.sendMessage(damager, ConfigUtils.getMessage("errors.youCannotInteractWithSuspect"));
-                final String soundString = ConfigUtils.getString("PlayerLocks.TakeDamage.Sound");
-
-                if (!soundString.equalsIgnoreCase("none")) {
-
-                    try {
-                        Sound sound = Sound.valueOf(ConfigUtils.getString("PlayerLocks.TakeDamage.Sound"));
-                        ((Player) damager).playSound(damaged.getLocation(), sound, 1f, 1f);
-                    } catch (IllegalArgumentException e) {
-                        UltimateCheatCheck.getInstance().getLogger().info("§6Unknown sound. (PlayerLocks.TakeDamage.Sound) The plugin is not broken.");
-                    }
-
-                }
-
-            }
-
             event.setCancelled(true);
+
+            if (damager instanceof Player) {
+                ChatUtils.sendMessage(damager, ConfigUtils.getMessage("errors.youCannotInteractWithSuspect"));
+            }
 
         }
 
@@ -93,9 +78,9 @@ public class CheckListeners implements Listener {
     public void onSuspectDamageEntity(EntityDamageByEntityEvent event) {
 
         final Entity damager = event.getDamager();
-
-        if (damager instanceof Player && cheatCheckManager.isChecking((Player) damager))
+        if (damager instanceof Player && cheatCheckManager.isChecking((Player) damager)) {
             event.setCancelled(true);
+        }
 
     }
 
@@ -107,9 +92,11 @@ public class CheckListeners implements Listener {
         if (ConfigUtils.getBoolean("PlayerLocks.SendCommands.Disabled") &&
                 cheatCheckManager.isChecking(player)) {
 
-            for (String availableCommand : ConfigUtils.getStrings("PlayerLocks.SendCommands.AvailableCommands"))
-                if (event.getMessage().startsWith(availableCommand))
+            for (String availableCommand : ConfigUtils.getStrings("PlayerLocks.SendCommands.AvailableCommands")) {
+                if (event.getMessage().startsWith(availableCommand)) {
                     return;
+                }
+            }
 
             event.setCancelled(true);
             ChatUtils.sendMessage(player, ConfigUtils.getMessage("errors.youCannotUseCommands"));
@@ -123,10 +110,8 @@ public class CheckListeners implements Listener {
 
         if (ConfigUtils.getBoolean("PlayerLocks.SendMessages.Disabled") &&
                 cheatCheckManager.isChecking(event.getPlayer())) {
-
             event.setCancelled(true);
             ChatUtils.sendMessage(event.getPlayer(), ConfigUtils.getMessage("errors.youCannotUseChat"));
-
         }
 
     }
@@ -135,19 +120,20 @@ public class CheckListeners implements Listener {
     public void onSuspectDropItem(PlayerDropItemEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.DropItems.Disabled") &&
-                cheatCheckManager.isChecking(event.getPlayer()))
-
+                cheatCheckManager.isChecking(event.getPlayer())) {
             event.setCancelled(true);
+        }
 
     }
 
     @EventHandler
-    public void onSuspectPickupItem(PlayerPickupItemEvent event) {
+    public void onSuspectPickupItem(EntityPickupItemEvent event) {
 
         if (ConfigUtils.getBoolean("PlayerLocks.PickupItems.Disabled") &&
-                cheatCheckManager.isChecking(event.getPlayer()))
-
+                event.getEntity() instanceof Player &&
+                cheatCheckManager.isChecking((Player) event.getEntity())) {
             event.setCancelled(true);
+        }
 
     }
 

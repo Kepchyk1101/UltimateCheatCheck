@@ -6,7 +6,7 @@
 
     <groupId>me.kepchyk1101</groupId>
     <artifactId>UltimateCheatCheck</artifactId>
-    <version>1.2.2</version>
+    <version>1.3.0</version>
     <packaging>jar</packaging>
 
     <name>UltimateCheatCheck</name>
@@ -36,6 +36,10 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>me.kepchyk1101.ultimatecheatcheck.util.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>me.kepchyk1101.kyori</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -93,6 +97,27 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>4.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

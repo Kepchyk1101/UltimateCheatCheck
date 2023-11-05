@@ -1,4 +1,4 @@
-package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
+package me.kepchyk1101.ultimatecheatcheck.command.subcommand;
 
 import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
@@ -8,15 +8,22 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class AcquitSubCommand implements SubCommand {
+public class StartSubCommand implements SubCommand {
 
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
         final Player suspect = Bukkit.getPlayer(args[0]);
-        if (suspect != null)
-            CheatCheckManager.getInstance().acquitPlayer(suspect, (Player) commandSender);
-        else
+        if (suspect != null) {
+
+            if (!(suspect == commandSender)) {
+
+                CheatCheckManager.getInstance().callPlayer(suspect, (Player) commandSender);
+
+            } else
+                ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.cannotSummonYourself"));
+
+        } else
             ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
 
         return true;
@@ -25,12 +32,12 @@ public class AcquitSubCommand implements SubCommand {
 
     @Override
     public String getName() {
-        return "acquit";
+        return "start";
     }
 
     @Override
     public String getPermission() {
-        return "ucc.acquit";
+        return "ucc.start";
     }
 
     @Override
@@ -40,7 +47,7 @@ public class AcquitSubCommand implements SubCommand {
 
     @Override
     public String usage() {
-        return ConfigUtils.getMessage("wrongCommandUsages.acquit");
+        return ConfigUtils.getMessage("wrongCommandUsages.start");
     }
 
     @Override

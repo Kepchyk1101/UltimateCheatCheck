@@ -1,18 +1,23 @@
-package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
+package me.kepchyk1101.ultimatecheatcheck.command.subcommand;
 
 import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ContactSubCommand implements SubCommand {
+public class AcquitSubCommand implements SubCommand {
 
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        CheatCheckManager.getInstance().playerContact((Player) commandSender, args[0]);
+        final Player suspect = Bukkit.getPlayer(args[0]);
+        if (suspect != null)
+            CheatCheckManager.getInstance().acquitPlayer(suspect, (Player) commandSender);
+        else
+            ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.playerNotFound"));
 
         return true;
 
@@ -20,12 +25,12 @@ public class ContactSubCommand implements SubCommand {
 
     @Override
     public String getName() {
-        return "contact";
+        return "acquit";
     }
 
     @Override
     public String getPermission() {
-        return null;
+        return "ucc.acquit";
     }
 
     @Override
@@ -35,7 +40,7 @@ public class ContactSubCommand implements SubCommand {
 
     @Override
     public String usage() {
-        return ConfigUtils.getMessage("wrongCommandUsages.contact");
+        return ConfigUtils.getMessage("wrongCommandUsages.acquit");
     }
 
     @Override

@@ -1,3 +1,10 @@
+# !!! PREFIX, MESSAGE, TITLES, BOSSBARS !!!
+# If you want to use minimessage, put the following text at the beginning of the line: "[minimessage] ", and then the text you need
+# If you use minimessage you won't be able to use legacy colors (&,§,&#), so you have to choose
+# Minimessages doc: https://docs.advntr.dev/minimessage/format.html
+# Web-constructor minimessages: https://webui.advntr.dev/
+# !!! PREFIX, MESSAGE, TITLES, BOSSBARS !!!
+
 configVersion: 1.0
 
   # By default, available 'en'(English), 'ru'(Russian), 'ua'(Ukrainian) and 'hu'(Hungarian). If you want your own message file, you have 2 options:
@@ -18,6 +25,8 @@ CheatCheck:
     - BLINDNESS
   # The time given to the player to provide his contacts to the moderator for communication. The value is indicated in seconds.
   Timer: 300
+  # Should the moderator be teleported to the game at the start of the cheat check?
+  AutoTeleportModerToSuspect: false
 
 Titles:
   StartCheckSuspectTitle: "&cCHECKING FOR CHEATS"
@@ -43,16 +52,21 @@ AutoPunishments:
   Commands:
     # The suspect left the game during an active cheat check.
     OnSuspectQuit:
-      - 'ban %suspect% Отказ от проверки (выход с игры)'
+      - 'ban %suspect% Refusal of cheat check (exit from the game)'
     # The suspect admitted to using third-party software.
     OnSuspectConfess:
-      - 'ban %suspect% Признание в использовании стороннего ПО'
+      - 'ban %suspect% Confession of using cheats'
     # The moderator found the suspect guilty.
     OnSuspectCondemned:
-      - 'ban %suspect% Вы признаны виновным в использовании стороннего ПО'
+      - 'ban %suspect% You have been found guilty of using cheats'
     # The suspect's time to provide contact information to the moderator has expired.
     OnSuspect`sTimerExpired:
-      - 'ban %suspect% Отказ от проверки (время истекло)'
+      - 'ban %suspect% Refusal of cheat check (timer expired)'
+
+# "none" - mute sound. (Case is not important, possible: NONE, nOnE, None, NonE etc.)
+Sounds:
+  OnCheatCheckStarted: BLOCK_ANVIL_LAND
+  OnSuspectAcquitted: BLOCK_ANVIL_LAND
 
 PlayerLocks:
   SendCommands:
@@ -60,6 +74,8 @@ PlayerLocks:
     Disabled: true
     # List of allowed commands, regardless of the "Disabled" field
     AvailableCommands:
+      - '/ultimatecheatcheck contact'
+      - '/ultimatecheatcheck confess'
       - '/ucc contact'
       - '/ucc confess'
   SendMessages:
@@ -78,10 +94,8 @@ PlayerLocks:
     # Prohibit the player from using RMB/LMB in the air/blocks?
     Disabled: true
   MakeDamage:
-    # Prevent the player from causing damage to players/mobs, etc?
+    # Prevent the player from causing damage to players/mobs, etc.?
     Disabled: true
   TakeDamage:
     # Prohibit the suspect from receiving damage from other entities (Players, Mobs, etc.)?
     Disabled: true
-    # Sound played to the player when attempting to damage a suspect.
-    Sound: ENTITY_ILLUSIONER_PREPARE_MIRROR

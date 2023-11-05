@@ -1,7 +1,7 @@
 package me.kepchyk1101.ultimatecheatcheck.config;
 
+import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -11,11 +11,11 @@ public class Localization {
     public static final String PREFIX = "lang/messages_";
     public static final String EXTENSION = ".yml";
 
-    private final JavaPlugin plugin;
+    private final UltimateCheatCheck plugin;
     private final File pluginDataFolder;
     private final Logger logger;
 
-    public Localization(JavaPlugin plugin) {
+    public Localization(UltimateCheatCheck plugin) {
         this.plugin = plugin;
         this.pluginDataFolder = this.plugin.getDataFolder();
         this.logger = this.plugin.getLogger();

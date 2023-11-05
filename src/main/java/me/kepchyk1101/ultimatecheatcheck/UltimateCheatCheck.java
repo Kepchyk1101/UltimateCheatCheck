@@ -1,30 +1,35 @@
 package me.kepchyk1101.ultimatecheatcheck;
 
-import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
+import lombok.Getter;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.config.Localization;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
+import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
 import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
 import me.kepchyk1101.ultimatecheatcheck.util.UpdateChecker;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
 
 public final class UltimateCheatCheck extends JavaPlugin {
 
-    private static UltimateCheatCheck instance;
+    @Getter private static UltimateCheatCheck instance;
+    @Getter private BukkitAudiences audiences;
+    @Getter private boolean placeholderAPICompatibility;
+    @Getter private ServerVersion serverVersion;
+    @Getter private CheckListeners checkListeners;
+    @Getter private RecoveryController recoveryController;
     private Logger logger;
-    private boolean placeholderAPICompatibility;
-    private ServerVersion serverVersion;
-    private CheckListeners checkListeners;
-    private RecoveryController recoveryController;
     private Localization localization;
     private FileConfiguration config;
 
@@ -32,6 +37,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
     public void onEnable() {
 
         instance = this;
+        audiences = BukkitAudiences.create(this);
         logger = getLogger();
         serverVersion = checkServerVersion();
         checkListeners = new CheckListeners();
@@ -45,11 +51,21 @@ public final class UltimateCheatCheck extends JavaPlugin {
         // If the server was shut down incorrectly, restore all damage
         recoveryAfterShutdownCheck();
 
+        if (isPluginYmlEdited()) {
+            logger.warning("Plugin.yml has been unauthorized edited. Plugin shutdown...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         // Check for integrations on the server
         checkIntegrationsCompatibility();
 
         // Register basic command and subcommands
-        registerBasicCommand();
+        if (!registerBasicCommand()) {
+            logger.warning("Failed to register plugin command. Plugin shutdown...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         // Checking and notifying about plugin updates
         if (ConfigUtils.getBoolean("checkUpdates")) {
@@ -72,9 +88,17 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         // Clear recovery file
         FileConfiguration recoveryConfig = recoveryController.getConfig();
-        for (String key : recoveryConfig.getConfigurationSection("checks").getKeys(false))
+        for (String key : recoveryConfig.getConfigurationSection("checks").getKeys(false)) {
             recoveryConfig.set("checks." + key, null);
+        }
         recoveryController.saveConfig();
+
+        if (audiences != null) {
+            audiences.close();
+            audiences = null;
+        }
+
+        instance = null;
 
         logger.info("Plugin disabled!");
 
@@ -115,33 +139,28 @@ public final class UltimateCheatCheck extends JavaPlugin {
         }
     }
 
-    private void registerBasicCommand() {
+    private boolean registerBasicCommand() {
 
         PluginCommand command = getCommand("ultimateCheatCheck");
-        UCCCommand uccCommand = new UCCCommand();
-        command.setExecutor(uccCommand);
-        command.setTabCompleter(uccCommand);
+        if (command != null) {
+            UCCCommand uccCommand = new UCCCommand();
+            command.setExecutor(uccCommand);
+            command.setTabCompleter(uccCommand);
+            return true;
+        }
+
+        return false;
 
     }
 
-    public static UltimateCheatCheck getInstance() {
-        return instance;
-    }
+    private boolean isPluginYmlEdited() {
 
-    public boolean isPlaceholderAPICompatibility() {
-        return placeholderAPICompatibility;
-    }
+        PluginDescriptionFile pluginDesc = getDescription();
+        List<String> pluginAuthors = pluginDesc.getAuthors();
+        return !pluginDesc.getName().equals("UltimateCheatCheck") ||
+                pluginAuthors.size() > 1 ||
+                !pluginAuthors.contains("Kepchyk1101");
 
-    public ServerVersion getServerVersion() {
-        return serverVersion;
-    }
-
-    public RecoveryController getRecoveryController() {
-        return recoveryController;
-    }
-
-    public CheckListeners getCheckListeners() {
-        return checkListeners;
     }
 
 }

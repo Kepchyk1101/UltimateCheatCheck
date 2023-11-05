@@ -14,14 +14,14 @@ misc:
 
 cheatCheck:
   messagesToModer:
-    youStartedChecking: "&aFelhívtad a gyanusítottadat &6%suspect%&a egy csalás ellenőrzésre!"
+    youStartedChecking: "[minimessage] <green>Felhívtad a gyanusítottadat</green> <gold>%suspect%</gold> <green>egy csalás ellenőrzésre! [</green><red><click:run_command:'/ucc condemn %suspect%'><hover:show_text:'<gray>LMB - Találd meg a játékost bűnösnek</gray>'><u>Elítélni</u></hover></click></red> <green><dark_green><click:run_command:'/ucc acquit %suspect%'><hover:show_text:'<gray>LMB – Találd meg a játékost ártatlannak</gray>'><u>Indokolja meg</u></hover></click></dark_green></green> <yellow><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>LMB – Szünet ellenőrzési időzítő</gray>'><u>Szünet</u></hover></click></yellow><green>]</green>"
     youAcquittedSuspect: "&aAz ellenőrzés befejeződött. Megtaláltad a gyanúsítottat &6%suspect%&a ártatlan!"
     youCondemnedSuspect: "&cAz ellenőrzés befejeződött. Megtaláltad a gyanúsítottat &6%suspect%&c bűnös!"
     youPausedChecking: "&aSzüneteltette a csalásellenőrzési időzítőt a következőnél &6%suspect%&a!"
     suspectConfessed: "&cAz ellenőrzés befejeződött. A gyanúsított elismerte, hogy harmadik féltől származó szoftvert használt!"
     suspectQuit: "&cAz ellenőrzés befejeződött. Gyanusított &6%suspect%&c &celhagyta a játékot!"
     suspectsTimerExpired: "&cAz ellenőrzés befejeződött. A gyanúsított időmérője lejárt."
-    youReceivedContacts: "&Gyanúsított &6%suspect% &üzenetet küldött neked: \"&6%contacts%&a\""
+    youReceivedContacts: "[minimessage] <green>Gyanúsított</green> <gold>%suspect%</gold> <green>üzenetet küldött neked: \"</green><gold>%contacts%</gold><green>\" [</green><yellow><u><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>LMB – Szünet ellenőrzési időzítő</gray>'>SZÜNET</hover></click></u></yellow><green>]</green>"
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lCSALÓK ELLENŐRZÉSE"
@@ -35,7 +35,8 @@ cheatCheck:
       - "&a║ &aModerátor: &6%moder%"
       - "&a║ &aA moderátor szüneteltetheti az időzítőt."
       - "&a║ &aBeismerés, hogy harmadik féltől származó szoftvert használ."
-      - "&a╚ &7(&e/ucc confess&7)&c."
+      - "&a║ &7(&e/ucc confess&7)&c."
+      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>LMB – Lépjen kapcsolatba a moderátorral</gray>'><click:suggest_command:'/ucc contact '>KAPCSOLAT MODERÁLÁSA</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>LMB – Ismerd be, hogy csal</gray>'><click:suggest_command:'/ucc confess'>VALÓSÍTSA BE A CSALÁST</click></hover></u></red><green>]</green>"
     youAcquitted: "&Az ellenőrzést befejezte: &6%moder%&a. Szabad vagy!"
     yourCheckPaused: "&aModerátor &6%moder%&a megállította az időzítődet!"
     youSentContacts: "&aSikeresen elküldted az üzenetet neki: &6%moder%&a. Üzenet: \"&6%contacts%&a\""

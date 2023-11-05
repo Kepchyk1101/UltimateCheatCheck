@@ -1,4 +1,4 @@
-package me.kepchyk1101.ultimatecheatcheck.command.subcommands;
+package me.kepchyk1101.ultimatecheatcheck.command.subcommand;
 
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;

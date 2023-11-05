@@ -39,6 +39,8 @@ public class CheatCheckManager {
                 ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youStartedChecking")
                         .replace("%suspect%", suspect.getName()));
 
+                cheatCheck.playSoundForSuspect("Sounds.OnCheatCheckStarted");
+
                 if (ACTIVE_CHECKS.size() == 1) {
                     Bukkit.getPluginManager().registerEvents(PLUGIN.getCheckListeners(), PLUGIN);
                 }
@@ -68,6 +70,8 @@ public class CheatCheckManager {
             ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youAcquittedSuspect")
                     .replace("%suspect%", suspect.getName()));
 
+            cheatCheck.playSoundForSuspect("Sounds.OnSuspectAcquitted");
+
             if (ACTIVE_CHECKS.size() == 0) {
                 HandlerList.unregisterAll(PLUGIN.getCheckListeners());
             }
@@ -89,8 +93,9 @@ public class CheatCheckManager {
             cheatCheck.stop();
             ACTIVE_CHECKS.remove(suspect);
 
-            for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectCondemned"))
+            for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectCondemned")) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+            }
 
             ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youCondemnedSuspect")
                     .replace("%suspect%", suspect.getName()));
@@ -122,7 +127,7 @@ public class CheatCheckManager {
                         .replace("%suspect%", suspect.getName()));
 
             } else
-                ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cannotPauseNotPausedCheatCheck"));
+                ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cheatCheckAlreadyPaused"));
 
         } else
             ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cannotPauseNotStartedCheatCheck"));
@@ -140,8 +145,9 @@ public class CheatCheckManager {
 
             cheatCheck.stop();
 
-            for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectConfess"))
+            for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectConfess")) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+            }
 
             ChatUtils.sendMessage(cheatCheck.getModerator(), ConfigUtils.getMessage("cheatCheck.messagesToModer.suspectConfessed"));
 
@@ -178,8 +184,9 @@ public class CheatCheckManager {
         cheatCheck.stop();
         ACTIVE_CHECKS.remove(suspect);
 
-        for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectQuit"))
+        for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectQuit")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+        }
 
         ChatUtils.sendMessage(cheatCheck.getModerator(), ConfigUtils.getMessage("cheatCheck.messagesToModer.suspectQuit")
                 .replace("%suspect%", suspect.getName()));
@@ -205,8 +212,9 @@ public class CheatCheckManager {
 
         cheatCheck.timerExpired();
 
-        for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspect`sTimerExpired"))
+        for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspect`sTimerExpired")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+        }
 
         ChatUtils.sendMessage(cheatCheck.getModerator(), ConfigUtils.getMessage("cheatCheck.messagesToModer.suspectsTimerExpired"));
 
@@ -240,9 +248,11 @@ public class CheatCheckManager {
     }
 
     private CheatCheck findByModer(Player moder) {
-        for (CheatCheck cheatCheck : ACTIVE_CHECKS.values())
-            if (cheatCheck.getModerator() == moder)
+        for (CheatCheck cheatCheck : ACTIVE_CHECKS.values()) {
+            if (cheatCheck.getModerator() == moder) {
                 return cheatCheck;
+            }
+        }
         return null;
     }
 

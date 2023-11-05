@@ -62,7 +62,7 @@ public class UpdateChecker implements Listener {
         final Player player = event.getPlayer();
         if (ConfigUtils.getBoolean("checkUpdates") && player.isOp()) {
             ChatUtils.sendMessage(player, ConfigUtils.getMessage("misc.availableNewPluginVersion")
-                    .replace("%actualVersion%", actualVersion));
+                    .replace("%latestVersion%", actualVersion));
         }
 
     }

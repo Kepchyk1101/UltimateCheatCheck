@@ -14,14 +14,14 @@ misc:
 
 cheatCheck:
   messagesToModer:
-    youStartedChecking: "&aYou have called suspect &6%suspect%&a for cheat check!"
+    youStartedChecking: "[minimessage] <green>You have called suspect</green> <gold>%suspect%</gold> <green>for cheat check! [</green><red><click:run_command:'/ucc condemn %suspect%'><hover:show_text:'<gray>LMB - Find the player guilty</gray>'><u>CONDEMN</u></hover></click></red> <green><dark_green><click:run_command:'/ucc acquit %suspect%'><hover:show_text:'<gray>LMB - Find the player innocent</gray>'><u>ACQUIT</u></hover></click></dark_green></green> <yellow><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>LMB - Pause the cheatcheck timer</gray>'><u>PAUSE</u></hover></click></yellow><green>]</green>"
     youAcquittedSuspect: "&aThe check is completed. You found the suspect &6%suspect%&a innocent!"
     youCondemnedSuspect: "&cThe check is completed. You found the suspect &6%suspect%&c guilty!"
     youPausedChecking: "&aYou have paused the cheat check timer for &6%suspect%&a!"
     suspectConfessed: "&cThe check is completed. The suspect admitted to using third-party software!"
     suspectQuit: "&cThe check is completed. Suspect &6%suspect%&c &cleft the game!"
     suspectsTimerExpired: "&cThe check is completed. The suspect's timer has expired."
-    youReceivedContacts: "&aSuspect &6%suspect% &asent you a message: \"&6%contacts%&a\""
+    youReceivedContacts: "[minimessage] <green>Suspect</green> <gold>%suspect%</gold> <green>sent you a message: \"</green><gold>%contacts%</gold><green>\" [</green><yellow><u><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>LMB - Pause check timer</gray>'>PAUSE</hover></click></u></yellow><green>]</green>"
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lCHECKING FOR CHEATS"
@@ -35,7 +35,8 @@ cheatCheck:
       - "&a║ &aYour moderator: &6%moder%"
       - "&a║ &aThe moderator may pause your timer."
       - "&a║ &aYou can admit to using third party software."
-      - "&a╚ &7(&e/ucc confess&7)&c."
+      - "&a║ &7(&e/ucc confess&7)&c."
+      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>LMB - Contact moderator</gray>'><click:suggest_command:'/ucc contact '>CONTACT MODERATION</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>LMB - Admit using cheats</gray>'><click:suggest_command:'/ucc confess'>CONFESS TO CHEATS</click></hover></u></red><green>]</green>"
     youAcquitted: "&aThe check is completed successfully by moderator &6%moder%&a. You can be free!"
     yourCheckPaused: "&aModerator &6%moder%&a has paused your cheat check timer!"
     youSentContacts: "&aYou have successfully sent a message to moderator &6%moder%&a. Message: \"&6%contacts%&a\""

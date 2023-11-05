@@ -1,21 +1,21 @@
 package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
+import lombok.Getter;
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
 import me.kepchyk1101.ultimatecheatcheck.util.*;
-import org.bukkit.Bukkit;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -24,22 +24,24 @@ public class CheatCheck {
 
     private final UltimateCheatCheck plugin;
     private final RecoveryController recoveryController;
+    private final BukkitAudiences audiences;
 
-    private final Player suspect, moderator;
-    private final UUID uuid;
-    private final Location suspectLocation;
-    private final Block blockUnderSuspect;
-    private final Material blockTypeUnderSuspect;
-    private final ArrayList<PotionEffectType> suspectEffects;
-    private final int timer;
+    @Getter private final Player suspect, moderator;
+    @Getter private final UUID uuid;
+    @Getter private final Location suspectLocation;
+    @Getter private final Block blockUnderSuspect;
+    @Getter private final Material blockTypeUnderSuspect;
+    @Getter private final ArrayList<PotionEffectType> suspectEffects;
+    @Getter private final int timer;
 
-    private BossBar suspectBossBar, moderBossBar;
-    private BukkitRunnable bossBarsController;
-    private boolean isPaused;
+    @Getter private BossBar suspectBossBar, moderBossBar;
+    @Getter private BukkitRunnable bossBarsController;
+    @Getter private boolean paused;
 
     public CheatCheck(Player suspect, Player moderator) {
         this.plugin = UltimateCheatCheck.getInstance();
         this.recoveryController = plugin.getRecoveryController();
+        this.audiences = plugin.getAudiences();
         this.suspect = suspect;
         this.moderator = moderator;
         this.uuid = UUID.randomUUID();
@@ -53,47 +55,34 @@ public class CheatCheck {
 
     public void start() {
 
-        suspectBossBar = Bukkit.createBossBar(
-                ChatUtils.format(ConfigUtils.getString("BossBars.SuspectBossBar.Text"), suspect),
-                BarColor.valueOf(ConfigUtils.getString("BossBars.SuspectBossBar.Color")),
-                BarStyle.valueOf(ConfigUtils.getString("BossBars.SuspectBossBar.Style"))
-        );
-
-        moderBossBar = Bukkit.createBossBar(
-                ChatUtils.format(ConfigUtils.getString("BossBars.ModerBossBar.Text"), moderator),
-                BarColor.valueOf(ConfigUtils.getString("BossBars.ModerBossBar.Color")),
-                BarStyle.valueOf(ConfigUtils.getString("BossBars.ModerBossBar.Style"))
-        );
+        suspectBossBar = getBossBarFromConfig("SuspectBossBar");
+        moderBossBar = getBossBarFromConfig("ModerBossBar");
 
         bossBarsController = new BukkitRunnable() {
 
             int counter = timer;
-            final double secondProgress = 1.0 / timer;
+            final float secondProgress = (float) (1.0 / timer);
 
             @Override
             public void run() {
 
-                // Bossbar timers
+                suspectBossBar.name(ChatUtils.getComponentFromText(ConfigUtils.getString("BossBars.SuspectBossBar.Text")
+                        .replace("%timeLeft%", String.valueOf(counter))));
+                moderBossBar.name(ChatUtils.getComponentFromText(ConfigUtils.getString("BossBars.ModerBossBar.Text")
+                        .replace("%timeLeft%", String.valueOf(counter))
+                        .replace("%suspect%", suspect.getName())));
 
-                suspectBossBar.setTitle(ChatUtils.format(
-                        ConfigUtils.getString("BossBars.SuspectBossBar.Text")
-                                .replace("%timeLeft%", String.valueOf(counter)),
-                        suspect));
-                moderBossBar.setTitle(ChatUtils.format(
-                        ConfigUtils.getString("BossBars.ModerBossBar.Text")
-                                .replace("%timeLeft%", String.valueOf(counter))
-                                .replace("%suspect%", suspect.getName()),
-                        moderator));
-
-                if (suspectBossBar.getProgress() >= secondProgress) {
-                    suspectBossBar.setProgress(suspectBossBar.getProgress() - secondProgress);
-                    moderBossBar.setProgress(moderBossBar.getProgress() - secondProgress);
+                if (suspectBossBar.progress() >= secondProgress) {
+                    suspectBossBar.progress(suspectBossBar.progress() - secondProgress);
+                    moderBossBar.progress(moderBossBar.progress() - secondProgress);
                 } else {
-                    suspectBossBar.setProgress(0.0D);
-                    moderBossBar.setProgress(0.0D);
+                    suspectBossBar.progress(0.0f);
+                    moderBossBar.progress(0.0f);
                 }
 
-                if (counter-- < 1) CheatCheckManager.getInstance().timerExpired(suspect);
+                if (counter-- < 1) {
+                    CheatCheckManager.getInstance().timerExpired(suspect);
+                }
 
             }
 
@@ -111,16 +100,20 @@ public class CheatCheck {
                 suspect,
                 ConfigUtils.getString("Titles.StartCheckSuspectTitle"),
                 ConfigUtils.getString("Titles.StartCheckSuspectSubTitle"),
-                0, 300 * 20,0);
+                0L, timer,0L);
 
         blockUnderSuspect.setType(Material.BEDROCK);
 
         suspect.teleport(BlockUtils.getCenteredBlockLocation(blockUnderSuspect).add(0, 0.5, 0));
 
-        suspectBossBar.addPlayer(suspect);
-        moderBossBar.addPlayer(moderator);
+        audiences.player(suspect).showBossBar(suspectBossBar);
+        audiences.player(moderator).showBossBar(moderBossBar);
 
         bossBarsController.runTaskTimer(plugin, 0L, 20L);
+
+        if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportModerToSuspect")) {
+            moderator.teleport(suspect);
+        }
 
         /*
          * The check is recorded in the recovery file so that in the event of
@@ -138,20 +131,23 @@ public class CheatCheck {
         recoveryConfig.set("checks." + uuidString + ".block.world", blockLocation.getWorld().getUID().toString());
         recoveryController.saveConfig();
 
-        isPaused = false;
+        paused = false;
 
     }
 
     public void stop() {
 
-        for (PotionEffectType effect : suspectEffects)
+        for (PotionEffectType effect : suspectEffects) {
             suspect.removePotionEffect(effect);
+        }
 
-        suspect.resetTitle();
+        plugin.getAudiences().player(suspect).clearTitle();
         blockUnderSuspect.setType(blockTypeUnderSuspect);
         suspect.teleport(suspectLocation);
-        suspectBossBar.removeAll();
-        moderBossBar.removeAll();
+
+        audiences.player(suspect).hideBossBar(suspectBossBar);
+        audiences.player(moderator).hideBossBar(moderBossBar);
+
         bossBarsController.cancel();
 
         /*
@@ -167,11 +163,11 @@ public class CheatCheck {
 
         bossBarsController.cancel();
 
-        suspectBossBar.setTitle(ChatUtils.format(ConfigUtils.getString("BossBars.SuspectBossBar.PausedText"), suspect));
-        moderBossBar.setTitle(ChatUtils.format(ConfigUtils.getString("BossBars.ModerBossBar.PausedText")
-                .replace("%suspect%", suspect.getName()), moderator));
+        suspectBossBar.name(ChatUtils.getComponentFromText(ConfigUtils.getString("BossBars.SuspectBossBar.PausedText")));
+        moderBossBar.name(ChatUtils.getComponentFromText(ConfigUtils.getString("BossBars.ModerBossBar.PausedText")
+                .replace("%suspect%", suspect.getName())));
 
-        isPaused = true;
+        paused = true;
 
     }
 
@@ -182,53 +178,25 @@ public class CheatCheck {
 
     }
 
-
-    public Player getSuspect() {
-        return suspect;
+    public void playSoundForSuspect(String path) {
+        String soundName = ConfigUtils.getString(path);
+        try {
+            if (!soundName.equalsIgnoreCase("none")) {
+                suspect.playSound(suspectLocation, Sound.valueOf(soundName), 1f, 1f);
+            }
+        } catch (IllegalArgumentException ignored) {
+            plugin.getLogger().info("§6Failed to play sound: \"%sound%\". Check the plugin configuration".replace("%sound%", soundName));
+        }
     }
 
-    public boolean isPaused() {
-        return isPaused;
-    }
+    public BossBar getBossBarFromConfig(String path) {
 
-    public Player getModerator() {
-        return moderator;
-    }
+        Component name = ChatUtils.getComponentFromText(ConfigUtils.getString("BossBars." + path + ".Text"));
+        BossBar.Color color = BossBar.Color.valueOf(ConfigUtils.getString("BossBars." + path + ".Color"));
+        BossBar.Overlay overlay = BossBarStyleAdapter.getKyoriBossBarStyle(ConfigUtils.getString("BossBars." + path + ".Style"));
 
-    public BossBar getSuspectBossBar() {
-        return suspectBossBar;
-    }
+        return BossBar.bossBar(name, 1f, color, overlay != null ? overlay : BossBar.Overlay.PROGRESS);
 
-    public BossBar getModerBossBar() {
-        return moderBossBar;
-    }
-
-    public BukkitRunnable getBossBarsController() {
-        return bossBarsController;
-    }
-
-    public Location getSuspectLocation() {
-        return suspectLocation;
-    }
-
-    public Block getBlockUnderSuspect() {
-        return blockUnderSuspect;
-    }
-
-    public ArrayList<PotionEffectType> getSuspectEffects() {
-        return suspectEffects;
-    }
-
-    public Material getBlockTypeUnderSuspect() {
-        return blockTypeUnderSuspect;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public int getTimer() {
-        return timer;
     }
 
 }

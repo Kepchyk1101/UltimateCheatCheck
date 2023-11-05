@@ -14,14 +14,14 @@ misc:
 
 cheatCheck:
   messagesToModer:
-    youStartedChecking: "&aВи викликали &6%suspect%&a на перевірку на чити!"
+    youStartedChecking: "[minimessage] <green>Ви викликали підозрюваного</green> <gold>%suspect%</gold> <green>на перевірку! [</green><red><click:run_command:'/ucc condemn %suspect%'><hover:show_text:'<gray>ЛКМ - Визнати гравця винним</gray>'><u>ВИННИЙ</u></hover></click></red> <green><dark_green><click:run_command:'/ucc acquit %suspect%'><hover:show_text:'<gray>ЛКМ - Визнати гравця невинним</gray>'><u>НЕВИННИЙ</u></hover></click></dark_green></green> <yellow><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>ЛКМ - Призупинити таймер перевірки</gray>'><u>ПАУЗА</u></hover></click></yellow><green>]</green>"
     youAcquittedSuspect: "&aПеревірку завершено. Ви визнали підозрюваного &6%suspect%&a невинним!"
     youCondemnedSuspect: "&cПеревірку завершено. Ви визнали підозрюваного &6%suspect%&c винним!"
     youPausedChecking: "&aВи призупинили таймер перевірки на чити для &6%suspect%&a!"
     suspectConfessed: "&cПеревірку завершено. Підозрюваний зізнався у використанні читів!"
     suspectQuit: "&cПеревірку завершено. Підозрюваний &6%suspect%&c &cвийшов із гри!"
     suspectsTimerExpired: "&cПеревірку завершено. Таймер підозрюваного минув!"
-    youReceivedContacts: "&aПідозрюваний &6%suspect% &aнадіслав вам повідомлення: \"&6%contacts%&a\""
+    youReceivedContacts: "[minimessage] <green>Підозрюваний</green> <gold>%suspect%</gold> <green>надіслав вам повідомлення: \"</green><gold>%contacts%</gold><green>\" [</green><yellow><u><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>ЛКМ - Призупинити таймер перевірки</gray>'>ПАУЗА</hover></click></u></yellow><green>]</green>"
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lПЕРЕВІРКА НА ЧИТИ"
@@ -35,7 +35,8 @@ cheatCheck:
       - "&a║ &aВаш модератор: &6%moder%"
       - "&a║ &aМодератор може зупинити ваш таймер."
       - "&a║ &aВи можете зізнатися у використанні читів."
-      - "&a╚ &7(&e/ucc confess&7)&c."
+      - "&a║ &7(&e/ucc confess&7)&c."
+      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>ЛКМ - Зв`язатися з модератором</gray>'><click:suggest_command:'/ucc contact '>ЗВ'ЯЗАТИСЯ З МОДЕРАЦІЄЮ</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>ЛКМ - Зізнатися у використанні читів</gray>'><click:suggest_command:'/ucc confess'>ВИЗНАТИСЯ В ЧИТАХ</click></hover></u></red><green>]</green>"
     youAcquitted: "&Перевірку успішно завершено модератором &6%moder%&a. Ви можете бути вільними!"
     yourCheckPaused: "&aМодератор &6%moder%&a призупинив ваш таймер перевірки на чити."
     youSentContacts: "&aВи успішно надіслали повідомлення модератору &6%moder%&a. Повідомлення: \"&6%contacts%&a\""
