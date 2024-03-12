@@ -122,7 +122,7 @@ public class CheatCheckManager {
                 cheatCheck.pause();
 
                 ChatUtils.sendMessage(suspect, ConfigUtils.getMessage("cheatCheck.messagesToSuspect.yourCheckPaused")
-                        .replace("%moder%", suspect.getName()));
+                        .replace("%moder%", moderator.getName()));
                 ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youPausedChecking")
                         .replace("%suspect%", suspect.getName()));
 
