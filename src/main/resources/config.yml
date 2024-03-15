@@ -27,6 +27,16 @@ CheatCheck:
   Timer: 300
   # Should the moderator be teleported to the game at the start of the cheat check?
   AutoTeleportModerToSuspect: false
+  AutoTeleportSuspect:
+    enabled: false
+    to:
+      ==: org.bukkit.Location
+      world: world
+      x: 0
+      y: 0
+      z: 0
+      pitch: 0
+      yaw: 0
 
 Titles:
   StartCheckSuspectTitle: "&cCHECKING FOR CHEATS"

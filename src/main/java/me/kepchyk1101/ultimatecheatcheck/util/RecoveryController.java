@@ -53,18 +53,11 @@ public class RecoveryController implements Listener {
             OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(config.getString("checks." + key + ".suspect")));
             crashedPlayers.add(player);
 
-            Bukkit.getWorld(UUID.fromString(config.getString("checks." + key + ".block.world"))).getBlockAt(
-                    config.getInt("checks." + key + ".block.x"),
-                    config.getInt("checks." + key + ".block.y"),
-                    config.getInt("checks." + key + ".block.z")
-            ).setType(Material.valueOf(config.getString("checks." + key + ".block.type")));
-
             config.set("checks." + key, null);
 
             saveConfig();
 
         }
-
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
 

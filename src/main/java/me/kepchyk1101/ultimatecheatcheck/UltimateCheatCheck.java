@@ -30,7 +30,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
     @Getter private CheckListeners checkListeners;
     @Getter private RecoveryController recoveryController;
     private Logger logger;
-    private Localization localization;
+    @Getter private Localization localization;
     private FileConfiguration config;
 
     @Override
@@ -50,12 +50,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         // If the server was shut down incorrectly, restore all damage
         recoveryAfterShutdownCheck();
-
-        if (isPluginYmlEdited()) {
-            logger.warning("Plugin.yml has been unauthorized edited. Plugin shutdown...");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
 
         // Check for integrations on the server
         checkIntegrationsCompatibility();
@@ -150,16 +144,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
         }
 
         return false;
-
-    }
-
-    private boolean isPluginYmlEdited() {
-
-        PluginDescriptionFile pluginDesc = getDescription();
-        List<String> pluginAuthors = pluginDesc.getAuthors();
-        return !pluginDesc.getName().equals("UltimateCheatCheck") ||
-                pluginAuthors.size() > 1 ||
-                !pluginAuthors.contains("Kepchyk1101");
 
     }
 

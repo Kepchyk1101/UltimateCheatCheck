@@ -1,5 +1,6 @@
 package me.kepchyk1101.ultimatecheatcheck.util;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
@@ -25,12 +26,16 @@ public class ConfigUtils {
     }
 
     public static String getMessage(String path) {
-        final String message = messages.getString(path);
-        return message != null ? message : "&cCannot read config`s message!";
+        String message = messages.getString(path);
+        return message != null ? message : path;
     }
 
     public static List<String> getMessages(String path) {
         return messages.getStringList(path);
+    }
+
+    public static Location getLocation(String path) {
+        return config.getLocation(path);
     }
 
     public static void setConfigs(FileConfiguration config, FileConfiguration messages) {

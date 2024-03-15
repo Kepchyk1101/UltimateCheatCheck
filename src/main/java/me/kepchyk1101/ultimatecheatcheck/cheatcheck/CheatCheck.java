@@ -102,9 +102,7 @@ public class CheatCheck {
                 ConfigUtils.getString("Titles.StartCheckSuspectSubTitle"),
                 0L, timer,0L);
 
-        blockUnderSuspect.setType(Material.BEDROCK);
-
-        suspect.teleport(BlockUtils.getCenteredBlockLocation(blockUnderSuspect).add(0, 0.5, 0));
+        //suspect.teleport(BlockUtils.getCenteredBlockLocation(blockUnderSuspect).add(0, 0.5, 0));
 
         audiences.player(suspect).showBossBar(suspectBossBar);
         audiences.player(moderator).showBossBar(moderBossBar);
@@ -115,20 +113,17 @@ public class CheatCheck {
             moderator.teleport(suspect);
         }
 
+        if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportSuspect.enabled")) {
+            suspect.teleport(ConfigUtils.getLocation("CheatCheck.AutoTeleportSuspect.to"));
+        }
+
         /*
          * The check is recorded in the recovery file so that in the event of
          * an emergency shutdown of the server, everything can be restored
          */
         String uuidString = uuid.toString();
-        Location blockLocation = blockUnderSuspect.getLocation();
-
         FileConfiguration recoveryConfig = recoveryController.getConfig();
         recoveryConfig.set("checks." + uuidString + ".suspect", suspect.getUniqueId().toString());
-        recoveryConfig.set("checks." + uuidString + ".block.x", blockLocation.getX());
-        recoveryConfig.set("checks." + uuidString + ".block.y", blockLocation.getY());
-        recoveryConfig.set("checks." + uuidString + ".block.z", blockLocation.getZ());
-        recoveryConfig.set("checks." + uuidString + ".block.type", blockTypeUnderSuspect.toString());
-        recoveryConfig.set("checks." + uuidString + ".block.world", blockLocation.getWorld().getUID().toString());
         recoveryController.saveConfig();
 
         paused = false;
@@ -142,7 +137,6 @@ public class CheatCheck {
         }
 
         plugin.getAudiences().player(suspect).clearTitle();
-        blockUnderSuspect.setType(blockTypeUnderSuspect);
         suspect.teleport(suspectLocation);
 
         audiences.player(suspect).hideBossBar(suspectBossBar);
