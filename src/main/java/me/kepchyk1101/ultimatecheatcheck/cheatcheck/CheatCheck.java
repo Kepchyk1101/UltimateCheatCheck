@@ -88,14 +88,6 @@ public class CheatCheck {
 
         };
 
-        for (String effect : ConfigUtils.getStrings("CheatCheck.EffectsToSuspect")) {
-            PotionEffectType potionEffectType = PotionEffectType.getByName(effect);
-            if (potionEffectType != null) {
-                suspect.addPotionEffect(new PotionEffect(potionEffectType, 1000000, 10));
-                suspectEffects.add(potionEffectType);
-            }
-        }
-
         ChatUtils.sendTitle(
                 suspect,
                 ConfigUtils.getString("Titles.StartCheckSuspectTitle"),
@@ -109,12 +101,20 @@ public class CheatCheck {
 
         bossBarsController.runTaskTimer(plugin, 0L, 20L);
 
+        if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportSuspect.enabled")) {
+            suspect.teleport(ConfigUtils.getLocation("CheatCheck.AutoTeleportSuspect.to"));
+        }
+
         if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportModerToSuspect")) {
             moderator.teleport(suspect);
         }
 
-        if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportSuspect.enabled")) {
-            suspect.teleport(ConfigUtils.getLocation("CheatCheck.AutoTeleportSuspect.to"));
+        for (String effect : ConfigUtils.getStrings("CheatCheck.EffectsToSuspect")) {
+            PotionEffectType potionEffectType = PotionEffectType.getByName(effect);
+            if (potionEffectType != null) {
+                suspect.addPotionEffect(new PotionEffect(potionEffectType, 1000000, 10));
+                suspectEffects.add(potionEffectType);
+            }
         }
 
         /*

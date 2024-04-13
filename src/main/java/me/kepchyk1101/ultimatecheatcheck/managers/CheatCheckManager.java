@@ -72,7 +72,7 @@ public class CheatCheckManager {
 
             cheatCheck.playSoundForSuspect("Sounds.OnSuspectAcquitted");
 
-            if (ACTIVE_CHECKS.size() == 0) {
+            if (ACTIVE_CHECKS.isEmpty()) {
                 HandlerList.unregisterAll(PLUGIN.getCheckListeners());
             }
 
@@ -94,7 +94,9 @@ public class CheatCheckManager {
             ACTIVE_CHECKS.remove(suspect);
 
             for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectCondemned")) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+                punish = punish.replace("%suspect%", suspect.getName());
+                punish = punish.replace("%moder%", moderator.getName());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish, suspect));
             }
 
             ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youCondemnedSuspect")
@@ -144,9 +146,12 @@ public class CheatCheckManager {
             if (EventUtils.callAndCheckEvent(new CheatCheckConfessEvent(cheatCheck))) return;
 
             cheatCheck.stop();
+            ACTIVE_CHECKS.remove(suspect);
 
             for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectConfess")) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+                punish = punish.replace("%suspect%", suspect.getName());
+                punish = punish.replace("%moder%", cheatCheck.getModerator().getName());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish, suspect));
             }
 
             ChatUtils.sendMessage(cheatCheck.getModerator(), ConfigUtils.getMessage("cheatCheck.messagesToModer.suspectConfessed"));
@@ -185,7 +190,9 @@ public class CheatCheckManager {
         ACTIVE_CHECKS.remove(suspect);
 
         for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectQuit")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+            punish = punish.replace("%suspect%", suspect.getName());
+            punish = punish.replace("%moder%", cheatCheck.getModerator().getName());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish, suspect));
         }
 
         ChatUtils.sendMessage(cheatCheck.getModerator(), ConfigUtils.getMessage("cheatCheck.messagesToModer.suspectQuit")
@@ -211,9 +218,12 @@ public class CheatCheckManager {
         CheatCheck cheatCheck = ACTIVE_CHECKS.get(suspect);
 
         cheatCheck.timerExpired();
+        ACTIVE_CHECKS.remove(suspect);
 
         for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspect`sTimerExpired")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish.replace("%suspect%", suspect.getName()), suspect));
+            punish = punish.replace("%suspect%", suspect.getName());
+            punish = punish.replace("%moder%", cheatCheck.getModerator().getName());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish, suspect));
         }
 
         ChatUtils.sendMessage(cheatCheck.getModerator(), ConfigUtils.getMessage("cheatCheck.messagesToModer.suspectsTimerExpired"));
@@ -222,7 +232,7 @@ public class CheatCheckManager {
 
     public void completionAllChecks() {
 
-        if (ACTIVE_CHECKS.size() > 0) {
+        if (!ACTIVE_CHECKS.isEmpty()) {
 
             PLUGIN.getLogger().info("Completing all active checks ...");
 
