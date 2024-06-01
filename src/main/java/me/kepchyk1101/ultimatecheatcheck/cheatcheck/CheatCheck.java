@@ -2,11 +2,12 @@ package me.kepchyk1101.ultimatecheatcheck.cheatcheck;
 
 import lombok.Getter;
 import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
-import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.*;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -38,7 +40,10 @@ public class CheatCheck {
     @Getter private BukkitRunnable bossBarsController;
     @Getter private boolean paused;
 
-    public CheatCheck(Player suspect, Player moderator) {
+    private final CheckService checkService;
+
+    public CheatCheck(Player suspect, Player moderator, @NotNull CheckService checkService) {
+        this.checkService = checkService;
         this.plugin = UltimateCheatCheck.getInstance();
         this.recoveryController = plugin.getRecoveryController();
         this.audiences = plugin.getAudiences();
@@ -81,7 +86,7 @@ public class CheatCheck {
                 }
 
                 if (counter-- < 1) {
-                    CheatCheckManager.getInstance().timerExpired(suspect);
+                    checkService.timerExpired(suspect);
                 }
 
             }
@@ -102,7 +107,12 @@ public class CheatCheck {
         bossBarsController.runTaskTimer(plugin, 0L, 20L);
 
         if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportSuspect.enabled")) {
-            suspect.teleport(ConfigUtils.getLocation("CheatCheck.AutoTeleportSuspect.to"));
+            Location location = ConfigUtils.getLocation("CheatCheck.AutoTeleportSuspect.to");
+            if (location == null) {
+                Bukkit.getLogger().warning("Error parsing location [AutoTeleportSuspect]");
+                return;
+            }
+            suspect.teleport(location);
         }
 
         if (ConfigUtils.getBoolean("CheatCheck.AutoTeleportModerToSuspect")) {

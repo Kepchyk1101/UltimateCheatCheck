@@ -1,17 +1,25 @@
 package me.kepchyk1101.ultimatecheatcheck.command.subcommand;
 
-import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ContactSubCommand implements SubCommand {
+
+    @NotNull
+    CheckService checkService;
 
     @Override
     public boolean onSubCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
 
-        CheatCheckManager.getInstance().playerContact((Player) commandSender, String.join(" ", args));
+        checkService.playerContact((Player) commandSender, String.join(" ", args));
 
         return true;
 

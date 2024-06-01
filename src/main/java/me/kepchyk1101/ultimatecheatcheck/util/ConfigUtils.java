@@ -1,6 +1,8 @@
 package me.kepchyk1101.ultimatecheatcheck.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
@@ -35,7 +37,18 @@ public class ConfigUtils {
     }
 
     public static Location getLocation(String path) {
-        return config.getLocation(path);
+        String worldString = config.getString(path + ".world");
+        if (worldString == null) return null;
+        World world = Bukkit.getWorld(worldString);
+        if (world == null) return null;
+        return new Location(
+                world,
+                config.getDouble(path + ".x"),
+                config.getDouble(path + ".y"),
+                config.getDouble(path + ".z"),
+                (float) config.getDouble(path + ".yaw"),
+                (float) config.getDouble(path + ".pitch")
+        );
     }
 
     public static void setConfigs(FileConfiguration config, FileConfiguration messages) {

@@ -4,7 +4,7 @@ import lombok.Getter;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.config.Localization;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
-import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
 import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
@@ -14,11 +14,9 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.List;
 import java.util.logging.Logger;
 
 public final class UltimateCheatCheck extends JavaPlugin {
@@ -33,14 +31,23 @@ public final class UltimateCheatCheck extends JavaPlugin {
     @Getter private Localization localization;
     private FileConfiguration config;
 
+    private CheckService checkService;
+
     @Override
     public void onEnable() {
 
         instance = this;
+
         audiences = BukkitAudiences.create(this);
+
+        checkService = new CheckService(this);
+
         logger = getLogger();
+
         serverVersion = checkServerVersion();
-        checkListeners = new CheckListeners();
+
+        checkListeners = new CheckListeners(checkService);
+
         localization = new Localization(this);
 
         // Configuration routine
@@ -77,7 +84,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
     public void onDisable() {
 
         // Correct completion of all checks during a normal server shutdown
-        CheatCheckManager.getInstance().completionAllChecks();
+        checkService.completionAllChecks();
         HandlerList.unregisterAll(checkListeners);
 
         // Clear recovery file
@@ -137,7 +144,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         PluginCommand command = getCommand("ultimateCheatCheck");
         if (command != null) {
-            UCCCommand uccCommand = new UCCCommand();
+            UCCCommand uccCommand = new UCCCommand(checkService);
             command.setExecutor(uccCommand);
             command.setTabCompleter(uccCommand);
             return true;

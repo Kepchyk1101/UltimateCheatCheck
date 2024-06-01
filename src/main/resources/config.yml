@@ -30,7 +30,6 @@ CheatCheck:
   AutoTeleportSuspect:
     enabled: false
     to:
-      ==: org.bukkit.Location
       world: world
       x: 0
       y: 0
@@ -41,6 +40,13 @@ CheatCheck:
 Titles:
   StartCheckSuspectTitle: "&cCHECKING FOR CHEATS"
   StartCheckSuspectSubTitle: "&fFollow the instructions in the chat"
+
+OnCheckStart:
+
+  # Commands that will be executed on behalf of the console when the scan starts
+  # Available placeholders: %suspect% - suspect's name, %inspector% - inspector's name
+  Commands:
+#    - 'example command'
 
 BossBars:
   # Bar Color: PINK, BLUE, RED, GREEN, YELLOW, WHITE, PURPLE

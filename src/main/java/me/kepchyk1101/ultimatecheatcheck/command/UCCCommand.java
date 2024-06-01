@@ -1,7 +1,9 @@
 package me.kepchyk1101.ultimatecheatcheck.command;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import me.kepchyk1101.ultimatecheatcheck.command.subcommand.*;
-import me.kepchyk1101.ultimatecheatcheck.managers.CheatCheckManager;
+import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.Bukkit;
@@ -16,21 +18,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UCCCommand implements TabExecutor {
 
-    private final List<SubCommand> subCommands;
-    private final CheatCheckManager cheatCheckManager = CheatCheckManager.getInstance();
+    private final List<SubCommand> subCommands = new ArrayList<>();
+    private final CheckService checkService;
 
-    public UCCCommand() {
-        subCommands = new ArrayList<>();
+    public UCCCommand(@NotNull CheckService checkService) {
+        this.checkService = checkService;
         subCommands.addAll(Arrays.asList(
                 new ReloadSubCommand(),
-                new StartSubCommand(),
-                new AcquitSubCommand(),
-                new CondemnSubCommand(),
-                new PauseSubCommand(),
-                new ContactSubCommand(),
-                new ConfessSubCommand()));
+                new StartSubCommand(checkService),
+                new AcquitSubCommand(checkService),
+                new CondemnSubCommand(checkService),
+                new PauseSubCommand(checkService),
+                new ContactSubCommand(checkService),
+                new ConfessSubCommand(checkService)));
     }
 
     @Override
@@ -118,7 +121,7 @@ public class UCCCommand implements TabExecutor {
                 if (args[0].equals("start") && commandSender.hasPermission("ucc.start")) {
                     List<String> players = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers())
-                        if (!player.hasPermission("ucc.immunity") && !cheatCheckManager.isChecking(player))
+                        if (!player.hasPermission("ucc.immunity") && !checkService.isChecking(player))
                             players.add(player.getName());
                     players.remove(commandSender.getName());
                     return players;
@@ -129,8 +132,8 @@ public class UCCCommand implements TabExecutor {
                 } else if (args[0].equals("pause") && commandSender.hasPermission("ucc.pause")) {
                     List<String> players = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers())
-                        if (cheatCheckManager.isChecking(player) &&
-                                !cheatCheckManager.findBySuspect(player).isPaused())
+                        if (checkService.isChecking(player) &&
+                                !checkService.findBySuspect(player).isPaused())
                             players.add(player.getName());
                     players.remove(commandSender.getName());
                     return players;
@@ -159,7 +162,7 @@ public class UCCCommand implements TabExecutor {
     private List<String> getCheckingPlayers(Player moderator) {
         List<String> players = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers())
-            if (cheatCheckManager.isChecking(player))
+            if (checkService.isChecking(player))
                 players.add(player.getName());
         players.remove(moderator.getName());
         return players;
