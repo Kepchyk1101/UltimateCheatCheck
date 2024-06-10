@@ -121,7 +121,7 @@ public class UCCCommand implements TabExecutor {
                 if (args[0].equals("start") && commandSender.hasPermission("ucc.start")) {
                     List<String> players = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers())
-                        if (!player.hasPermission("ucc.immunity") && !checkService.isChecking(player))
+                        if (!player.hasPermission("ucc.immunity") && !checkService.isSuspect(player))
                             players.add(player.getName());
                     players.remove(commandSender.getName());
                     return players;
@@ -132,8 +132,8 @@ public class UCCCommand implements TabExecutor {
                 } else if (args[0].equals("pause") && commandSender.hasPermission("ucc.pause")) {
                     List<String> players = new ArrayList<>();
                     for (Player player : Bukkit.getOnlinePlayers())
-                        if (checkService.isChecking(player) &&
-                                !checkService.findBySuspect(player).isPaused())
+                        if (checkService.isSuspect(player) &&
+                                !checkService.getBySuspect(player).isPaused())
                             players.add(player.getName());
                     players.remove(commandSender.getName());
                     return players;
@@ -162,7 +162,7 @@ public class UCCCommand implements TabExecutor {
     private List<String> getCheckingPlayers(Player moderator) {
         List<String> players = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers())
-            if (checkService.isChecking(player))
+            if (checkService.isSuspect(player))
                 players.add(player.getName());
         players.remove(moderator.getName());
         return players;

@@ -26,7 +26,7 @@ public class StartSubCommand implements SubCommand {
 
             if (!(suspect == commandSender)) {
 
-                checkService.callPlayer(suspect, (Player) commandSender);
+                checkService.start(suspect, (Player) commandSender);
 
             } else
                 ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.cannotSummonYourself"));

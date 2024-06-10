@@ -4,7 +4,9 @@ main: me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck
 api-version: '1.13'
 author: Kepchyk1101
 website: https://github.com/Kepchyk1101/UltimateCheatCheck
-softdepend: [PlaceholderAPI]
+softdepend:
+  - PlaceholderAPI
+  - AntiRelog
 commands:
   ultimateCheatCheck:
     description: Basic command

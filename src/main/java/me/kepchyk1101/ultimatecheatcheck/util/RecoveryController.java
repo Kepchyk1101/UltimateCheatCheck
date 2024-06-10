@@ -1,7 +1,6 @@
 package me.kepchyk1101.ultimatecheatcheck.util;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

@@ -3,7 +3,6 @@ package me.kepchyk1101.ultimatecheatcheck.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.events.*;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
@@ -11,8 +10,9 @@ import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import ru.leymooo.antirelog.manager.PvPManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,51 +21,52 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CheckService {
 
-    @NotNull UltimateCheatCheck plugin;
     @NotNull Map<Player, CheatCheck> activeChecksBySuspects = new HashMap<>();
+    @NotNull Map<Player, CheatCheck> activeChecksByInspectors = new HashMap<>();
+    @Nullable PvPManager pvpManager;
 
-    public void callPlayer(@NotNull Player suspect, @NotNull Player moderator) {
+    public void start(@NotNull Player suspect, @NotNull Player inspector) {
 
         if (!activeChecksBySuspects.containsKey(suspect)) {
 
             if (!suspect.hasPermission("ucc.immunity")) {
 
-                CheatCheck cheatCheck = new CheatCheck(suspect, moderator, this);
+                CheatCheck cheatCheck = new CheatCheck(suspect, inspector, this);
 
                 if (EventUtils.callAndCheckEvent(new CheatCheckStartEvent(cheatCheck))) return;
 
+                if (pvpManager != null && pvpManager.isInPvP(suspect)) {
+                    pvpManager.stopPvPSilent(suspect);
+                }
+
                 cheatCheck.start();
                 activeChecksBySuspects.put(suspect, cheatCheck);
+                activeChecksByInspectors.put(inspector, cheatCheck);
 
                 for (String message : ConfigUtils.getMessages("cheatCheck.messagesToSuspect.youCalledForCheck"))
                     ChatUtils.sendMessage(suspect, message
                             .replace("%time%", String.valueOf(cheatCheck.getTimer()))
                             .replace("%moder%", cheatCheck.getModerator().getName()));
-                ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youStartedChecking")
+                ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("cheatCheck.messagesToModer.youStartedChecking")
                         .replace("%suspect%", suspect.getName()));
 
                 cheatCheck.playSoundForSuspect("Sounds.OnCheatCheckStarted");
 
-                if (activeChecksBySuspects.size() == 1) {
-                    Bukkit.getPluginManager().registerEvents(plugin.getCheckListeners(), plugin);
-                }
-
                 ConfigUtils.getStrings("OnCheckStart.Commands").forEach(cmd -> {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd
                             .replace("%suspect%", suspect.getName())
-                            .replace("%inspector%", moderator.getName()));
+                            .replace("%inspector%", inspector.getName()));
                 });
 
             } else
-                ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.suspectHasImmunity"));
+                ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.suspectHasImmunity"));
 
         } else
-            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.suspectAlreadyOnCheatCheck"));
+            ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.suspectAlreadyOnCheatCheck"));
 
     }
 
-    // Признать игрока невиновным
-    public void acquitPlayer(Player suspect, Player moderator) {
+    public void acquitPlayer(Player suspect, Player inspector) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -75,25 +76,21 @@ public class CheckService {
 
             cheatCheck.stop();
             activeChecksBySuspects.remove(suspect);
+            activeChecksByInspectors.remove(inspector);
 
             ChatUtils.sendMessage(suspect, ConfigUtils.getMessage("cheatCheck.messagesToSuspect.youAcquitted")
-                    .replace("%moder%", moderator.getName()));
-            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youAcquittedSuspect")
+                    .replace("%moder%", inspector.getName()));
+            ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("cheatCheck.messagesToModer.youAcquittedSuspect")
                     .replace("%suspect%", suspect.getName()));
 
             cheatCheck.playSoundForSuspect("Sounds.OnSuspectAcquitted");
 
-            if (activeChecksBySuspects.isEmpty()) {
-                HandlerList.unregisterAll(plugin.getCheckListeners());
-            }
-
         } else
-            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cannotStopNotStartedCheatCheck"));
+            ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.cannotStopNotStartedCheatCheck"));
 
     }
 
-    // Признать игрока виновным
-    public void condemnPlayer(Player suspect, Player moderator) {
+    public void condemnPlayer(Player suspect, Player inspector) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -103,26 +100,22 @@ public class CheckService {
 
             cheatCheck.stop();
             activeChecksBySuspects.remove(suspect);
+            activeChecksByInspectors.remove(inspector);
 
             for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectCondemned")) {
                 punish = punish.replace("%suspect%", suspect.getName());
-                punish = punish.replace("%moder%", moderator.getName());
+                punish = punish.replace("%moder%", inspector.getName());
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish, suspect));
             }
 
-            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("cheatCheck.messagesToModer.youCondemnedSuspect")
+            ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("cheatCheck.messagesToModer.youCondemnedSuspect")
                     .replace("%suspect%", suspect.getName()));
 
-            if (activeChecksBySuspects.isEmpty()) {
-                HandlerList.unregisterAll(plugin.getCheckListeners());
-            }
-
         } else
-            ChatUtils.sendMessage(moderator, ConfigUtils.getMessage("errors.cannotStopNotStartedCheatCheck"));
+            ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.cannotStopNotStartedCheatCheck"));
 
     }
 
-    // Приостановить таймер проверки
     public void suspendCheck(Player suspect, Player moderator) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
@@ -147,7 +140,6 @@ public class CheckService {
 
     }
 
-    // Игрок признался самостоятельно
     public void suspectConfess(Player suspect) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
@@ -158,6 +150,7 @@ public class CheckService {
 
             cheatCheck.stop();
             activeChecksBySuspects.remove(suspect);
+            activeChecksByInspectors.remove(cheatCheck.getModerator());
 
             for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectConfess")) {
                 punish = punish.replace("%suspect%", suspect.getName());
@@ -199,6 +192,7 @@ public class CheckService {
 
         cheatCheck.stop();
         activeChecksBySuspects.remove(suspect);
+        activeChecksByInspectors.remove(cheatCheck.getModerator());
 
         for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectQuit")) {
             punish = punish.replace("%suspect%", suspect.getName());
@@ -213,11 +207,12 @@ public class CheckService {
 
     public void moderQuit(Player moder) {
 
-        CheatCheck cheatCheck = findByModer(moder);
+        CheatCheck cheatCheck = getByInspector(moder);
 
         cheatCheck.stop();
         Player suspect = cheatCheck.getSuspect();
         activeChecksBySuspects.remove(suspect);
+        activeChecksByInspectors.remove(cheatCheck.getModerator());
 
         ChatUtils.sendMessage(suspect, ConfigUtils.getMessage("cheatCheck.messagesToSuspect.moderQuit")
                 .replace("%moder%", cheatCheck.getModerator().getName()));
@@ -230,6 +225,7 @@ public class CheckService {
 
         cheatCheck.timerExpired();
         activeChecksBySuspects.remove(suspect);
+        activeChecksByInspectors.remove(cheatCheck.getModerator());
 
         for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspect`sTimerExpired")) {
             punish = punish.replace("%suspect%", suspect.getName());
@@ -241,44 +237,30 @@ public class CheckService {
 
     }
 
-    public void completionAllChecks() {
+    public void stopAllChecks() {
 
-        if (!activeChecksBySuspects.isEmpty()) {
-
-            Bukkit.getLogger().info("Completing all active checks ...");
-
-            for (CheatCheck cheatCheck : activeChecksBySuspects.values()) {
-                cheatCheck.stop();
-            }
-
-            activeChecksBySuspects.clear();
-
-        }
+        activeChecksBySuspects.forEach((suspect, check) -> check.stop());
+        activeChecksBySuspects.clear();
+        activeChecksByInspectors.clear();
 
     }
 
-    public boolean isChecking(Player suspect) {
-        return activeChecksBySuspects.containsKey(suspect);
+    public boolean isSuspect(@NotNull Player player) {
+        return activeChecksBySuspects.containsKey(player);
     }
 
-    public boolean isModer(Player player) {
-        for (CheatCheck cheatCheck : activeChecksBySuspects.values())
-            if (cheatCheck.getModerator() == player)
-                return true;
-        return false;
+    public boolean isInspector(@NotNull Player player) {
+        return activeChecksByInspectors.containsKey(player);
     }
 
-    private CheatCheck findByModer(Player moder) {
-        for (CheatCheck cheatCheck : activeChecksBySuspects.values()) {
-            if (cheatCheck.getModerator() == moder) {
-                return cheatCheck;
-            }
-        }
-        return null;
+    @Nullable
+    private CheatCheck getByInspector(@NotNull Player player) {
+        return activeChecksByInspectors.get(player);
     }
 
-    public CheatCheck findBySuspect(Player suspect) {
-        return activeChecksBySuspects.get(suspect);
+    @Nullable
+    public CheatCheck getBySuspect(@NotNull Player player) {
+        return activeChecksBySuspects.get(player);
     }
 
 }

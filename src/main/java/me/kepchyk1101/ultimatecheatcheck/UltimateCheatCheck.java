@@ -11,10 +11,14 @@ import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
 import me.kepchyk1101.ultimatecheatcheck.util.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
+import ru.leymooo.antirelog.Antirelog;
+import ru.leymooo.antirelog.manager.PvPManager;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -40,7 +44,7 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         audiences = BukkitAudiences.create(this);
 
-        checkService = new CheckService(this);
+        checkService = new CheckService(getPvPManagerInstance());
 
         logger = getLogger();
 
@@ -68,6 +72,8 @@ public final class UltimateCheatCheck extends JavaPlugin {
             return;
         }
 
+        getServer().getPluginManager().registerEvents(checkListeners, this);
+
         // Checking and notifying about plugin updates
         if (ConfigUtils.getBoolean("checkUpdates")) {
             new UpdateChecker(this, 112711).checkPluginUpdates();
@@ -84,7 +90,8 @@ public final class UltimateCheatCheck extends JavaPlugin {
     public void onDisable() {
 
         // Correct completion of all checks during a normal server shutdown
-        checkService.completionAllChecks();
+        Bukkit.getLogger().info("Completing all active checks ...");
+        checkService.stopAllChecks();
         HandlerList.unregisterAll(checkListeners);
 
         // Clear recovery file
@@ -152,6 +159,17 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         return false;
 
+    }
+
+    @Nullable
+    private Antirelog getAntiRelogInstance() {
+        return (Antirelog) Bukkit.getPluginManager().getPlugin("AntiRelog");
+    }
+
+    @Nullable
+    private PvPManager getPvPManagerInstance() {
+        Antirelog antirelog = getAntiRelogInstance();
+        return antirelog != null ? antirelog.getPvpManager() : null;
     }
 
 }
