@@ -9,7 +9,7 @@ misc:
     - "&e/ucc condemn <player> - &aЗавершити перевірку (Визнати підозрюваного винним)"
     - "&e/ucc pause <player> - &aПризупинити таймер перевірки підозрюваного"
     - "&e/ucc contact <contacts> - &9Надіслати контактні дані модератору для зв'язку (Гравець)"
-    - "&e/ucc confess - &9Зізнатися у використанні читів та достроково завершити перевірку. (Гравець)"
+    - "&e/confess - &9Зізнатися у використанні читів та достроково завершити перевірку. (Гравець)"
     - "&6====== &eUltimateCheatCheck &6======"
 
 cheatCheck:
@@ -35,8 +35,8 @@ cheatCheck:
       - "&a║ &aВаш модератор: &6%moder%"
       - "&a║ &aМодератор може зупинити ваш таймер."
       - "&a║ &aВи можете зізнатися у використанні читів."
-      - "&a║ &7(&e/ucc confess&7)&c."
-      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>ЛКМ - Зв`язатися з модератором</gray>'><click:suggest_command:'/ucc contact '>ЗВ'ЯЗАТИСЯ З МОДЕРАЦІЄЮ</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>ЛКМ - Зізнатися у використанні читів</gray>'><click:suggest_command:'/ucc confess'>ВИЗНАТИСЯ В ЧИТАХ</click></hover></u></red><green>]</green>"
+      - "&a║ &7(&e/confess&7)&c."
+      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>ЛКМ - Зв`язатися з модератором</gray>'><click:suggest_command:'/ucc contact '>ЗВ'ЯЗАТИСЯ З МОДЕРАЦІЄЮ</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>ЛКМ - Зізнатися у використанні читів</gray>'><click:suggest_command:'/confess'>ВИЗНАТИСЯ В ЧИТАХ</click></hover></u></red><green>]</green>"
     youAcquitted: "&Перевірку успішно завершено модератором &6%moder%&a. Ви можете бути вільними!"
     yourCheckPaused: "&aМодератор &6%moder%&a призупинив ваш таймер перевірки на чити."
     youSentContacts: "&aВи успішно надіслали повідомлення модератору &6%moder%&a. Повідомлення: \"&6%contacts%&a\""

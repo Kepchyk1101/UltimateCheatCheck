@@ -1,13 +1,13 @@
 package me.kepchyk1101.ultimatecheatcheck;
 
 import lombok.Getter;
+import me.kepchyk1101.ultimatecheatcheck.command.ConfessCommand;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.config.Localization;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
 import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
-import me.kepchyk1101.ultimatecheatcheck.util.ServerVersion;
 import me.kepchyk1101.ultimatecheatcheck.util.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
@@ -62,12 +62,8 @@ public final class UltimateCheatCheck extends JavaPlugin {
         // Check for integrations on the server
         checkIntegrationsCompatibility();
 
-        // Register basic command and subcommands
-        if (!registerBasicCommand()) {
-            logger.warning("Failed to register plugin command. Plugin shutdown...");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
+        getCommand("ultimateCheatCheck").setExecutor(new UCCCommand(checkService));
+        getCommand("confess").setExecutor(new ConfessCommand(checkService));
 
         getServer().getPluginManager().registerEvents(checkListeners, this);
 
@@ -133,20 +129,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
         if (this.placeholderAPICompatibility) {
             logger.info("PlaceholderAPI detected, placeholder support enabled!");
         }
-    }
-
-    private boolean registerBasicCommand() {
-
-        PluginCommand command = getCommand("ultimateCheatCheck");
-        if (command != null) {
-            UCCCommand uccCommand = new UCCCommand(checkService);
-            command.setExecutor(uccCommand);
-            command.setTabCompleter(uccCommand);
-            return true;
-        }
-
-        return false;
-
     }
 
     @Nullable

@@ -11,6 +11,8 @@ commands:
   ultimateCheatCheck:
     description: Basic command
     aliases: ucc
+  confess:
+    description: Confess command
 permissions:
   ucc.*:
     description: Master-permission. Allows you to use any commands

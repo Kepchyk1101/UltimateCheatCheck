@@ -9,7 +9,7 @@ misc:
     - "&e/ucc condemn <játékos> - &aAz ellenőrzés befejeződőtt (Bűnös)"
     - "&e/ucc pause <játékos> - &aMegállítja a csalásellenőrzést"
     - "&e/ucc contact <kapcsolat> - &9Adja meg adatait a moderátornak (Játékos)"
-    - "&e/ucc confess - &9Vallja be hogy csalt és fejezze be gyorsan (Játékos)"
+    - "&e/confess - &9Vallja be hogy csalt és fejezze be gyorsan (Játékos)"
     - "&6====== &eUltimateCheatCheck &6======"
 
 cheatCheck:
@@ -35,8 +35,8 @@ cheatCheck:
       - "&a║ &aModerátor: &6%moder%"
       - "&a║ &aA moderátor szüneteltetheti az időzítőt."
       - "&a║ &aBeismerés, hogy harmadik féltől származó szoftvert használ."
-      - "&a║ &7(&e/ucc confess&7)&c."
-      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>LMB – Lépjen kapcsolatba a moderátorral</gray>'><click:suggest_command:'/ucc contact '>KAPCSOLAT MODERÁLÁSA</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>LMB – Ismerd be, hogy csal</gray>'><click:suggest_command:'/ucc confess'>VALÓSÍTSA BE A CSALÁST</click></hover></u></red><green>]</green>"
+      - "&a║ &7(&e/confess&7)&c."
+      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>LMB – Lépjen kapcsolatba a moderátorral</gray>'><click:suggest_command:'/ucc contact '>KAPCSOLAT MODERÁLÁSA</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>LMB – Ismerd be, hogy csal</gray>'><click:suggest_command:'/confess'>VALÓSÍTSA BE A CSALÁST</click></hover></u></red><green>]</green>"
     youAcquitted: "&Az ellenőrzést befejezte: &6%moder%&a. Szabad vagy!"
     yourCheckPaused: "&aModerátor &6%moder%&a megállította az időzítődet!"
     youSentContacts: "&aSikeresen elküldted az üzenetet neki: &6%moder%&a. Üzenet: \"&6%contacts%&a\""

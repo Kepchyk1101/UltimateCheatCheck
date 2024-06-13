@@ -150,6 +150,7 @@ public class CheatCheck {
         }
 
         plugin.getAudiences().player(suspect).clearTitle();
+        suspect.resetTitle();
         suspect.teleport(suspectLocation);
 
         audiences.player(suspect).hideBossBar(suspectBossBar);

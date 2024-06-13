@@ -97,6 +97,8 @@ public class CheckListeners implements Listener {
         if (ConfigUtils.getBoolean("PlayerLocks.SendCommands.Disabled") &&
                 checkService.isSuspect(player)) {
 
+            if (event.getMessage().equals("/confess")) return;
+
             for (String availableCommand : ConfigUtils.getStrings("PlayerLocks.SendCommands.AvailableCommands")) {
                 if (event.getMessage().startsWith(availableCommand)) {
                     return;

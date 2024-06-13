@@ -9,7 +9,7 @@ misc:
     - "&e/ucc condemn <player> - &aFinish the check (Found guilty)"
     - "&e/ucc pause <player> - &aPause the cheat check timer"
     - "&e/ucc contact <contacts> - &9Provide contact information to the moderator (Player)"
-    - "&e/ucc confess - &9Admit cheating and finish the check early (Player)"
+    - "&e/confess - &9Admit cheating and finish the check early (Player)"
     - "&6====== &eUltimateCheatCheck &6======"
 
 cheatCheck:
@@ -35,8 +35,8 @@ cheatCheck:
       - "&a║ &aYour moderator: &6%moder%"
       - "&a║ &aThe moderator may pause your timer."
       - "&a║ &aYou can admit to using third party software."
-      - "&a║ &7(&e/ucc confess&7)&c."
-      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>LMB - Contact moderator</gray>'><click:suggest_command:'/ucc contact '>CONTACT MODERATION</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>LMB - Admit using cheats</gray>'><click:suggest_command:'/ucc confess'>CONFESS TO CHEATS</click></hover></u></red><green>]</green>"
+      - "&a║ &7(&e/confess&7)&c."
+      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>LMB - Contact moderator</gray>'><click:suggest_command:'/ucc contact '>CONTACT MODERATION</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>LMB - Admit using cheats</gray>'><click:suggest_command:'/confess'>CONFESS TO CHEATS</click></hover></u></red><green>]</green>"
     youAcquitted: "&aThe check is completed successfully by moderator &6%moder%&a. You can be free!"
     yourCheckPaused: "&aModerator &6%moder%&a has paused your cheat check timer!"
     youSentContacts: "&aYou have successfully sent a message to moderator &6%moder%&a. Message: \"&6%contacts%&a\""
