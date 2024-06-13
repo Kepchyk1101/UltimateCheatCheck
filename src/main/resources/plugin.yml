@@ -9,6 +9,7 @@ loadbefore:
 softdepend:
   - PlaceholderAPI
   - AntiRelog
+  - Essentials
 commands:
   ultimateCheatCheck:
     description: Basic command
@@ -21,6 +22,7 @@ permissions:
     children:
       - ucc.reload
       - ucc.moder
+      - ucc.start.force
   ucc.moder:
     description: Allows you to use /ucc start, /ucc acquit, /ucc condemn, /ucc pause
     children:
@@ -42,6 +44,8 @@ permissions:
     description: Allows you to use /ucc reload
   ucc.start:
     description: Allows you to use /ucc start
+  ucc.start.force:
+    description: Allows you to use /ucc start <nickname> -f|-force
   ucc.acquit:
     description: Allows you to use /ucc acquit
   ucc.condemn:

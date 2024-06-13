@@ -6,7 +6,6 @@ import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.BossBarStyleAdapter;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
@@ -15,7 +14,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -28,7 +26,6 @@ import java.util.UUID;
 public class CheatCheck {
 
     private final UltimateCheatCheck plugin;
-    private final RecoveryController recoveryController;
     private final BukkitAudiences audiences;
 
     @Getter private final Player suspect, moderator;
@@ -48,7 +45,6 @@ public class CheatCheck {
     public CheatCheck(Player suspect, Player moderator, @NotNull CheckService checkService) {
         this.checkService = checkService;
         this.plugin = UltimateCheatCheck.getInstance();
-        this.recoveryController = plugin.getRecoveryController();
         this.audiences = plugin.getAudiences();
         this.suspect = suspect;
         this.moderator = moderator;
@@ -130,15 +126,6 @@ public class CheatCheck {
             }
         }
 
-        /*
-         * The check is recorded in the recovery file so that in the event of
-         * an emergency shutdown of the server, everything can be restored
-         */
-        String uuidString = uuid.toString();
-        FileConfiguration recoveryConfig = recoveryController.getConfig();
-        recoveryConfig.set("checks." + uuidString + ".suspect", suspect.getUniqueId().toString());
-        recoveryController.saveConfig();
-
         paused = false;
 
     }
@@ -157,13 +144,6 @@ public class CheatCheck {
         audiences.player(moderator).hideBossBar(moderBossBar);
 
         bossBarsController.cancel();
-
-        /*
-         * Here the check record is deleted
-         */
-        FileConfiguration recoveryConfig = recoveryController.getConfig();
-        recoveryConfig.set("checks." + uuid.toString(), null);
-        recoveryController.saveConfig();
 
     }
 

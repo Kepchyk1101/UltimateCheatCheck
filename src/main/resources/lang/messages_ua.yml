@@ -8,7 +8,6 @@ misc:
     - "&e/ucc acquit <player> - &aЗавершити перевірку (Визнати підозрюваного невинним)"
     - "&e/ucc condemn <player> - &aЗавершити перевірку (Визнати підозрюваного винним)"
     - "&e/ucc pause <player> - &aПризупинити таймер перевірки підозрюваного"
-    - "&e/ucc contact <contacts> - &9Надіслати контактні дані модератору для зв'язку (Гравець)"
     - "&e/confess - &9Зізнатися у використанні читів та достроково завершити перевірку. (Гравець)"
     - "&6====== &eUltimateCheatCheck &6======"
 
@@ -22,6 +21,8 @@ cheatCheck:
     suspectQuit: "&cПеревірку завершено. Підозрюваний &6%suspect%&c &cвийшов із гри!"
     suspectsTimerExpired: "&cПеревірку завершено. Таймер підозрюваного минув!"
     youReceivedContacts: "[minimessage] <green>Підозрюваний</green> <gold>%suspect%</gold> <green>надіслав вам повідомлення: \"</green><gold>%contacts%</gold><green>\" [</green><yellow><u><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>ЛКМ - Призупинити таймер перевірки</gray>'>ПАУЗА</hover></click></u></yellow><green>]</green>"
+    suspect-added-to-queue: '&fПідозрюваний доданий до черги перевірок. Як тільки він з`явиться на сервері – перевірка почнеться автоматично!'
+    you-already-wait-suspect: '&fВи вже очікуєте іншого підозрюваного. &7(&f%queue-suspect%&7)'
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lПЕРЕВІРКА НА ЧИТИ"
@@ -57,6 +58,9 @@ errors:
   youCannotUseCommands: "&cВи не можете використовувати команди, тому що ви перебуваете на перевірці!"
   youCannotInteractWithSuspect: "&cВи не можете взаємодіяти з цим гравцем, оскільки він перебуватиме на перевірці на чити!"
   youCannotConfess: "&cВи не можете зізнатися у використанні читів, не перебуваючи при цьому на перевірці!"
+  never-played-before: '&cЦей гравець ніколи не з`являвся на сервері!'
+  function-disabled: '&cЦя функція (%func-name%) вимкнена у config.yml!'
+  cant-call-suspect-afk: '&cВи не можете викликати цього гравця на перевірку, оскільки він АФК!'
 
 wrongCommandUsages:
   start: "&cIНеправильне використання команди! &aВикористовуйте: /ucc start <гравець>"

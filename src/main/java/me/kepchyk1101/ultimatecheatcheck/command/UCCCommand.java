@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import me.kepchyk1101.ultimatecheatcheck.command.subcommand.*;
 import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
+import me.kepchyk1101.ultimatecheatcheck.service.LaterCheckService;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import org.bukkit.Bukkit;
@@ -21,14 +22,15 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UCCCommand implements TabExecutor {
 
-    private final List<SubCommand> subCommands = new ArrayList<>();
-    private final CheckService checkService;
+    @NotNull List<SubCommand> subCommands = new ArrayList<>();
+    @NotNull CheckService checkService;
 
-    public UCCCommand(@NotNull CheckService checkService) {
+    public UCCCommand(@NotNull CheckService checkService,
+                      @NotNull LaterCheckService laterCheckService) {
         this.checkService = checkService;
         subCommands.addAll(Arrays.asList(
                 new ReloadSubCommand(),
-                new StartSubCommand(checkService),
+                new StartSubCommand(checkService, laterCheckService),
                 new AcquitSubCommand(checkService),
                 new CondemnSubCommand(checkService),
                 new PauseSubCommand(checkService)));

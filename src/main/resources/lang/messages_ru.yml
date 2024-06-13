@@ -8,7 +8,6 @@ misc:
     - "&e/ucc acquit <игрок> - &aОкончить проверку (Признать невиновным)"
     - "&e/ucc condemn <игрок> - &aОкончить проверку (Признать виновным)"
     - "&e/ucc pause <игрок> - &aПриостановить таймер проверки"
-    - "&e/ucc contact <контакты> - &9Предоставить информацию для связи модератору (Игрок)"
     - "&e/confess - &9Признаться в читах и досрочно окончить проверку (Игрок)"
     - "&6====== &eUltimateCheatCheck &6======"
 
@@ -22,6 +21,8 @@ cheatCheck:
     suspectQuit: "&cПроверка окончена. Подозреваемый &6%suspect%&c &cпокинул игру!"
     suspectsTimerExpired: "&cПроверка окончена. У подозреваемого истекло время таймера."
     youReceivedContacts: "[minimessage] <green>Подозреваемый</green> <gold>%suspect%</gold> <green>отправил вам сообщение: \"</green><gold>%contacts%</gold><green>\" [</green><yellow><u><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>ЛКМ - Приостановить таймер проверки</gray>'>ПАУЗА</hover></click></u></yellow><green>]</green>"
+    suspect-added-to-queue: '&fПодозреваемый добавлен в очередь проверок. Как только он появится на сервере - проверка начнётся автоматически!'
+    you-already-wait-suspect: '&fВы уже ожидаете другого подозреваемого. &7(&f%queue-suspect%&7)'
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lПРОВЕРКА НА ЧИТЫ"
@@ -57,6 +58,9 @@ errors:
   youCannotUseCommands: "&cВы не можете использовать команды, так-как вы находитесь на проверке на читы!"
   youCannotInteractWithSuspect: "&cВы не можете взаимодействовать с этим игроком, так как он вызван на проверку читов!"
   youCannotConfess: "&cВы не можете признаться в использовании стороннего ПО, так как вы не находитесь на проверке!"
+  never-played-before: '&cЭтот игрок никогда не появлялся на сервере!'
+  function-disabled: '&cЭта функция(%func-name%) отключена в config.yml!'
+  cant-call-suspect-afk: '&cВы не можете вызвать этого игрока на проверку так как он АФК!'
 
 wrongCommandUsages:
   start: "&cНеправильное использование команды! &aИспользуйте: /ucc start <игрок>"

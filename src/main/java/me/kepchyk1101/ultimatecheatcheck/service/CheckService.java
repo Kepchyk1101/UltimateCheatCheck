@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import me.kepchyk1101.ultimatecheatcheck.cheatcheck.CheatCheck;
 import me.kepchyk1101.ultimatecheatcheck.events.*;
+import me.kepchyk1101.ultimatecheatcheck.service.afk.AfkChecker;
 import me.kepchyk1101.ultimatecheatcheck.util.ChatUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
 import me.kepchyk1101.ultimatecheatcheck.util.EventUtils;
@@ -24,8 +25,9 @@ public class CheckService {
     @NotNull Map<Player, CheatCheck> activeChecksBySuspects = new HashMap<>();
     @NotNull Map<Player, CheatCheck> activeChecksByInspectors = new HashMap<>();
     @Nullable PvPManager pvpManager; // AntiRelog
+    @Nullable AfkChecker afkChecker; // EssentialsX /afk
 
-    public void start(@NotNull Player suspect, @NotNull Player inspector) {
+    public void start(@NotNull Player suspect, @NotNull Player inspector, boolean force) {
 
         if (!activeChecksBySuspects.containsKey(suspect)) {
 
@@ -37,6 +39,12 @@ public class CheckService {
 
                 if (pvpManager != null && pvpManager.isInPvP(suspect)) {
                     pvpManager.stopPvPSilent(suspect);
+                }
+
+                if (!force && ConfigUtils.getBoolean("experimental.afk-check")
+                        && afkChecker != null && afkChecker.isAfk(suspect)) {
+                    ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.cant-call-suspect-afk"));
+                    return;
                 }
 
                 cheatCheck.start();

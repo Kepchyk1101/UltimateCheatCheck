@@ -1,18 +1,20 @@
 package me.kepchyk1101.ultimatecheatcheck;
 
+import com.earth2me.essentials.Essentials;
 import lombok.Getter;
 import me.kepchyk1101.ultimatecheatcheck.command.ConfessCommand;
 import me.kepchyk1101.ultimatecheatcheck.command.UCCCommand;
 import me.kepchyk1101.ultimatecheatcheck.config.Localization;
 import me.kepchyk1101.ultimatecheatcheck.listeners.CheckListeners;
 import me.kepchyk1101.ultimatecheatcheck.service.CheckService;
+import me.kepchyk1101.ultimatecheatcheck.service.LaterCheckService;
+import me.kepchyk1101.ultimatecheatcheck.service.afk.AfkChecker;
+import me.kepchyk1101.ultimatecheatcheck.service.afk.EssentialsAfkChecker;
 import me.kepchyk1101.ultimatecheatcheck.util.ConfigUtils;
-import me.kepchyk1101.ultimatecheatcheck.util.RecoveryController;
 import me.kepchyk1101.ultimatecheatcheck.util.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import ru.leymooo.antirelog.Antirelog;
 import ru.leymooo.antirelog.manager.PvPManager;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 public final class UltimateCheatCheck extends JavaPlugin {
@@ -29,12 +30,12 @@ public final class UltimateCheatCheck extends JavaPlugin {
     @Getter private BukkitAudiences audiences;
     @Getter private boolean placeholderAPICompatibility;
     @Getter private CheckListeners checkListeners;
-    @Getter private RecoveryController recoveryController;
     private Logger logger;
     @Getter private Localization localization;
     private FileConfiguration config;
 
     private CheckService checkService;
+    private LaterCheckService laterCheckService;
 
     @Override
     public void onEnable() {
@@ -43,7 +44,14 @@ public final class UltimateCheatCheck extends JavaPlugin {
 
         audiences = BukkitAudiences.create(this);
 
-        checkService = new CheckService(getPvPManagerInstance());
+        Essentials ess = (Essentials) getServer().getPluginManager().getPlugin("Essentials");
+        AfkChecker afkChecker = null;
+        if (ess != null && ess.isEnabled()) {
+            afkChecker = new EssentialsAfkChecker(ess);
+        }
+
+        checkService = new CheckService(getPvPManagerInstance(), afkChecker);
+        laterCheckService = new LaterCheckService(checkService);
 
         logger = getLogger();
 
@@ -56,16 +64,14 @@ public final class UltimateCheatCheck extends JavaPlugin {
         config = getConfig();
         loadConfigs();
 
-        // If the server was shut down incorrectly, restore all damage
-        recoveryAfterShutdownCheck();
-
         // Check for integrations on the server
         checkIntegrationsCompatibility();
 
-        getCommand("ultimateCheatCheck").setExecutor(new UCCCommand(checkService));
+        getCommand("ultimateCheatCheck").setExecutor(new UCCCommand(checkService, laterCheckService));
         getCommand("confess").setExecutor(new ConfessCommand(checkService));
 
         getServer().getPluginManager().registerEvents(checkListeners, this);
+        getServer().getPluginManager().registerEvents(laterCheckService, this);
 
         // Checking and notifying about plugin updates
         if (ConfigUtils.getBoolean("checkUpdates")) {
@@ -87,13 +93,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
         checkService.stopAllChecks();
         HandlerList.unregisterAll(checkListeners);
 
-        // Clear recovery file
-        FileConfiguration recoveryConfig = recoveryController.getConfig();
-        for (String key : recoveryConfig.getConfigurationSection("checks").getKeys(false)) {
-            recoveryConfig.set("checks." + key, null);
-        }
-        recoveryController.saveConfig();
-
         if (audiences != null) {
             audiences.close();
             audiences = null;
@@ -102,15 +101,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
         instance = null;
 
         logger.info("Plugin disabled!");
-
-    }
-
-    private void recoveryAfterShutdownCheck() {
-
-        recoveryController = new RecoveryController(this, new File(getDataFolder(), "recovery.yml"));
-        if (recoveryController.isNeedRecovery()) {
-            recoveryController.startRecovery();
-        }
 
     }
 

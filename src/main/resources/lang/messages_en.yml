@@ -22,6 +22,8 @@ cheatCheck:
     suspectQuit: "&cThe check is completed. Suspect &6%suspect%&c &cleft the game!"
     suspectsTimerExpired: "&cThe check is completed. The suspect's timer has expired."
     youReceivedContacts: "[minimessage] <green>Suspect</green> <gold>%suspect%</gold> <green>sent you a message: \"</green><gold>%contacts%</gold><green>\" [</green><yellow><u><click:run_command:'/ucc pause %suspect%'><hover:show_text:'<gray>LMB - Pause check timer</gray>'>PAUSE</hover></click></u></yellow><green>]</green>"
+    suspect-added-to-queue: '&fThe suspect has been added to the check queue. As soon as it appears on the server, the check will begin automatically!'
+    you-already-wait-suspect: '&fYou are already expecting another suspect. &7(&f%queue-suspect%&7)'
   messagesToSuspect:
     youCalledForCheck:
       - "&a╔             &4&lCHECKING FOR CHEATS"
@@ -57,6 +59,9 @@ errors:
   youCannotUseCommands: "&cYou cannot use commands because you are being checked for cheats!"
   youCannotInteractWithSuspect: "&cYou cannot interact with this player because he has been summoned for a cheat check!"
   youCannotConfess: "&cYou cannot admit to using third party software because you are not under verification!"
+  never-played-before: '&cThis player has never appeared on the server!'
+  function-disabled: '&cThis function(%func-name%) is disabled in config.yml!'
+  cant-call-suspect-afk: '&cYou cannot call this player for a check since he is AFK!'
 
 wrongCommandUsages:
   start: "&cIncorrect use of command! &aUse: /ucc start <player>"

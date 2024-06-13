@@ -19,6 +19,24 @@ checkUpdates: false
 # Prefix for ALL messages sent to the player. If you want messages without a prefix, leave the field blank.
 messagesPrefix: '&7(&e&lUCC&7) '
 
+# Experimental features. !Use at your own risk!
+experimental:
+
+  # !Unstable function!
+  # If the function does not take root, it must be removed!
+  # If you have an authentication plugin (For example: AuthMe, nLogin, etc.) - !DO NOT USE THIS!
+  # Allows you to add an offline player to the check queue using /ucc start <nickname> -l|-later.
+  # This means that if a player is offline, stands in a queue and enters the server, he will instantly be called for verification by the inspector who called the command
+  # To reset the queue, you need to re-login to the server or reboot it
+  #
+  later-checks-enabled: false
+
+  # More or less stable function.
+  # Inspectors will not be able to call a suspect for verification if EssentialsX is installed
+  # on the server, this function is enabled and the afk player is via /afk
+  # The suspect can be forced by adding the “-f” or “-force” flag at the end of the command (perm ucc.start.force is required)
+  afk-check: true
+
 CheatCheck:
   # Effects applied to the player when the check begins.
   EffectsToSuspect:
