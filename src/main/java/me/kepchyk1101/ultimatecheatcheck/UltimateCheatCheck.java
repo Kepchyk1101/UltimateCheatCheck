@@ -28,7 +28,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
     @Getter private static UltimateCheatCheck instance;
     @Getter private BukkitAudiences audiences;
     @Getter private boolean placeholderAPICompatibility;
-    @Getter private ServerVersion serverVersion;
     @Getter private CheckListeners checkListeners;
     @Getter private RecoveryController recoveryController;
     private Logger logger;
@@ -47,8 +46,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
         checkService = new CheckService(getPvPManagerInstance());
 
         logger = getLogger();
-
-        serverVersion = checkServerVersion();
 
         checkListeners = new CheckListeners(checkService);
 
@@ -118,15 +115,6 @@ public final class UltimateCheatCheck extends JavaPlugin {
         if (recoveryController.isNeedRecovery()) {
             recoveryController.startRecovery();
         }
-
-    }
-
-    private ServerVersion checkServerVersion() {
-
-        final String version = getServer().getClass().getPackage().getName().split("\\.")[3];
-        final String subVersion = version.replace("v1_", "").replaceAll("_R\\d", "");
-
-        return (Integer.parseInt(subVersion) >= 16) ? ServerVersion.V1_16_orHigher : ServerVersion.V1_15_2_orLower;
 
     }
 

@@ -72,28 +72,7 @@ public class ChatUtils {
             message = PlaceholderAPI.setPlaceholders(player, message);
         }
 
-        return colorize(message);
-
-    }
-
-    //ToDo: заменить на что-то получше (используется для dispatchCommand)
-    private static String colorize(String message) {
-
-        // hex colors (1.16+)
-        if (UltimateCheatCheck.getInstance().getServerVersion() == ServerVersion.V1_16_orHigher) {
-
-            Matcher match = HEX_PATTERN.matcher(message);
-            while (match.find()) {
-                String color = message.substring(match.start() + 1, match.end());
-                message = message.replace("&" + color, net.md_5.bungee.api.ChatColor.of(color) + "");
-                match = HEX_PATTERN.matcher(message);
-            }
-            return ChatColor.translateAlternateColorCodes('&', message.replace("{", "").replace("}", ""));
-
-        }
-
-        // default mc colors
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return message;
 
     }
 
