@@ -29,7 +29,7 @@ public class StartSubCommand implements SubCommand {
 
         if (later && !commandSender.getName().equals(args[0])) {
 
-            if (!commandSender.hasPermission("ucc.start.force")) {
+            if (!commandSender.hasPermission("ucc.start.later")) {
                 ChatUtils.sendMessage(commandSender, ConfigUtils.getMessage("errors.noPermission"));
                 return true;
             }

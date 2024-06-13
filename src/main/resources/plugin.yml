@@ -46,6 +46,8 @@ permissions:
     description: Allows you to use /ucc start
   ucc.start.force:
     description: Allows you to use /ucc start <nickname> -f|-force
+  ucc.start.later:
+    description: Allows you to use /ucc start <nickname> -l|-later
   ucc.acquit:
     description: Allows you to use /ucc acquit
   ucc.condemn:

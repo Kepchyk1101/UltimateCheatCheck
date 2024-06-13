@@ -43,6 +43,10 @@ public class CheckService {
 
                 if (!force && ConfigUtils.getBoolean("experimental.afk-check")
                         && afkChecker != null && afkChecker.isAfk(suspect)) {
+                    if (!inspector.hasPermission("ucc.start.force")) {
+                        ChatUtils.sendMessage(inspector, ConfigUtils.getString("errors.noPermission"));
+                        return;
+                    }
                     ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.cant-call-suspect-afk"));
                     return;
                 }
