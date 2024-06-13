@@ -4,6 +4,8 @@ main: me.kepchyk1101.ultimatecheatcheck.UltimateCheatCheck
 api-version: '1.13'
 author: Kepchyk1101
 website: https://github.com/Kepchyk1101/UltimateCheatCheck
+loadbefore:
+  - LiteBans
 softdepend:
   - PlaceholderAPI
   - AntiRelog
@@ -31,7 +33,6 @@ permissions:
     description: Allows you to use /ucc contact, /ucc confess
     default: true
     children:
-      - ucc.contact
       - ucc.confess
   ucc.help:
     description: Allows you to see a help window when using a command incorrectly
@@ -47,9 +48,6 @@ permissions:
     description: Allows you to use /ucc condemn
   ucc.pause:
     description: Allows you to use /ucc pause
-  ucc.contact:
-    default: true
-    description: Allows you to use /ucc contact
   ucc.confess:
     default: true
     description: Allows you to use /ucc confess

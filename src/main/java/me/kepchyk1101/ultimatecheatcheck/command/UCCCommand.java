@@ -31,8 +31,8 @@ public class UCCCommand implements TabExecutor {
                 new StartSubCommand(checkService),
                 new AcquitSubCommand(checkService),
                 new CondemnSubCommand(checkService),
-                new PauseSubCommand(checkService),
-                new ContactSubCommand(checkService)));
+                new PauseSubCommand(checkService)));
+                //new ContactSubCommand(checkService)));
     }
 
     @Override
@@ -108,8 +108,8 @@ public class UCCCommand implements TabExecutor {
                     subCommands.add("condemn");
                 if (commandSender.hasPermission("ucc.pause"))
                     subCommands.add("pause");
-                if (commandSender.hasPermission("ucc.contact"))
-                    subCommands.add("contact");
+//                if (commandSender.hasPermission("ucc.contact"))
+//                    subCommands.add("contact");
 
                 return subCommands;
 

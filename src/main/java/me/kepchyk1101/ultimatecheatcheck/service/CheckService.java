@@ -23,7 +23,7 @@ public class CheckService {
 
     @NotNull Map<Player, CheatCheck> activeChecksBySuspects = new HashMap<>();
     @NotNull Map<Player, CheatCheck> activeChecksByInspectors = new HashMap<>();
-    @Nullable PvPManager pvpManager;
+    @Nullable PvPManager pvpManager; // AntiRelog
 
     public void start(@NotNull Player suspect, @NotNull Player inspector) {
 
@@ -66,7 +66,7 @@ public class CheckService {
 
     }
 
-    public void acquitPlayer(Player suspect, Player inspector) {
+    public void acquitPlayer(@NotNull Player suspect, @NotNull Player inspector) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -90,7 +90,7 @@ public class CheckService {
 
     }
 
-    public void condemnPlayer(Player suspect, Player inspector) {
+    public void condemnPlayer(@NotNull Player suspect, @NotNull Player inspector) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -116,7 +116,7 @@ public class CheckService {
 
     }
 
-    public void suspendCheck(Player suspect, Player moderator) {
+    public void suspendCheck(@NotNull Player suspect, @NotNull Player moderator) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -140,7 +140,7 @@ public class CheckService {
 
     }
 
-    public void suspectConfess(Player suspect) {
+    public void suspectConfess(@NotNull Player suspect) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -165,7 +165,7 @@ public class CheckService {
 
     }
 
-    public void playerContact(Player suspect, String contacts) {
+    public void playerContact(@NotNull Player suspect, @NotNull String contacts) {
 
         if (activeChecksBySuspects.containsKey(suspect)) {
 
@@ -186,7 +186,7 @@ public class CheckService {
 
     }
 
-    public void suspectQuit(Player suspect) {
+    public void suspectQuit(@NotNull Player suspect) {
 
         CheatCheck cheatCheck = activeChecksBySuspects.get(suspect);
 
@@ -205,7 +205,7 @@ public class CheckService {
 
     }
 
-    public void moderQuit(Player moder) {
+    public void moderQuit(@NotNull Player moder) {
 
         CheatCheck cheatCheck = getByInspector(moder);
 
@@ -219,7 +219,7 @@ public class CheckService {
 
     }
 
-    public void timerExpired(Player suspect) {
+    public void timerExpired(@NotNull Player suspect) {
 
         CheatCheck cheatCheck = activeChecksBySuspects.get(suspect);
 

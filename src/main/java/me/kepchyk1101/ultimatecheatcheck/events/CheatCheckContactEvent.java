@@ -5,8 +5,8 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * en: The event is called when a suspect sent contacts to a moderator (/ucc contact <contacts>). May be canceled.
- * ру: Событие вызывается когда подозреваемый отправляет контакты модератору (/ucc contact <контакты>). Может быть отменено.
+ * en: The event is called when a suspect sent contacts to a moderator. May be canceled.
+ * ру: Событие вызывается когда подозреваемый отправляет контакты модератору. Может быть отменено.
  */
 public class CheatCheckContactEvent extends CancellableEvent {
 

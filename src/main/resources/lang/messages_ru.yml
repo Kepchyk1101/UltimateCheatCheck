@@ -36,7 +36,7 @@ cheatCheck:
       - "&a║ &aМодератор может приостановить ваш таймер."
       - "&a║ &aВы можете признаться в использовании стороннего ПО."
       - "&a║ &7(&e/confess&7)&c."
-      - "[minimessage] <green>╚ [</green><u><dark_green><hover:show_text:'<gray>ЛКМ - Связаться с модератором</gray>'><click:suggest_command:'/ucc contact '>СВЯЗАТЬСЯ С МОДЕРАЦИЕЙ</click></hover></dark_green></u> <green>|</green> <red><u><hover:show_text:'<gray>ЛКМ - Признаться в использовании читов</gray>'><click:suggest_command:'/confess'>ПРИЗНАТЬСЯ В ЧИТАХ</click></hover></u></red><green>]</green>"
+      - "[minimessage] <green>╚ [<red><u><hover:show_text:'<gray>ЛКМ - Признаться в использовании читов</gray>'><click:suggest_command:'/confess'>ПРИЗНАТЬСЯ В ЧИТАХ</click></hover></u></red><green>]</green>"
     youAcquitted: "&aПроверка успешно завершена модератором &6%moder%&a. Вы можете быть свободны!"
     yourCheckPaused: "&aМодератор &6%moder%&a приостановил ваш таймер проверки на читы!"
     youSentContacts: "&aВы успешно отправили сообщение модератору &6%moder%&a. Сообщение: \"&6%contacts%&a\""

@@ -90,10 +90,7 @@ PlayerLocks:
     Disabled: true
     # List of allowed commands, regardless of the "Disabled" field
     AvailableCommands:
-      - '/ultimatecheatcheck contact'
-      - '/ultimatecheatcheck confess'
-      - '/ucc contact'
-      - '/ucc confess'
+#      - '/example'
   SendMessages:
     # Should I prevent a player from using chat?
     Disabled: true
