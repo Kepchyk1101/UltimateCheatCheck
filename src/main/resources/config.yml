@@ -93,6 +93,9 @@ AutoPunishments:
     # The moderator found the suspect guilty.
     OnSuspectCondemned:
       - 'ban %suspect% You have been found guilty of using cheats'
+    # The moderator found the suspect not guilty.
+    OnSuspectAcquitted:
+#      - 'example'
     # The suspect's time to provide contact information to the moderator has expired.
     OnSuspect`sTimerExpired:
       - 'ban %suspect% Refusal of cheat check (timer expired)'

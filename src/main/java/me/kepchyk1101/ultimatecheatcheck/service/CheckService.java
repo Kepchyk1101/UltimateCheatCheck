@@ -96,6 +96,12 @@ public class CheckService {
                     .replace("%suspect%", suspect.getName()));
 
             cheatCheck.playSoundForSuspect("Sounds.OnSuspectAcquitted");
+            
+            for (String punish : ConfigUtils.getStrings("AutoPunishments.Commands.OnSuspectAcquitted")) {
+                punish = punish.replace("%suspect%", suspect.getName());
+                punish = punish.replace("%moder%", inspector.getName());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtils.format(punish, suspect));
+            }
 
         } else
             ChatUtils.sendMessage(inspector, ConfigUtils.getMessage("errors.cannotStopNotStartedCheatCheck"));
